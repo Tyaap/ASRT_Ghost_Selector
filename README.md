@@ -9,8 +9,8 @@ How to use:
 1. Start the game, then open the EXE file.
 
 2. Choose one of the two ghost selectors:
-  *Position --> Selects the ghost at chosen position on the leaderboard. Position 0 = ghost disabled (but your PB ghost still shows).
-  *Fastest Player --> Selects the fastest ghost out of a list of players. You need to know their Steam ID (called steamID64). Go to a players Steam profile, copy the website address, paste it here: https://steamid.io and click lookup.
+  * Position --> Selects the ghost at chosen position on the leaderboard. Position 0 = ghost disabled (but your PB ghost still shows).
+  * Fastest Player --> Selects the fastest ghost out of a list of players. You need to know their Steam ID (called steamID64). Go to a players Steam profile, copy the website address, paste it here: https://steamid.io and click lookup.
 
 3. Choose options under "Graphics Options".
 
