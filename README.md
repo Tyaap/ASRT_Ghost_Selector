@@ -17,5 +17,5 @@ How to use:
 4. Click the "Save and Apply" button, return to the games main menu to make sure everything is applied. You're all set!
 
 Notes:
-*Your selections will be lost when the game is closed. However the program will remember your choices, just reopen the program and click "Save and Apply" again.
-*If nothing is happening after applying your choices, try right clicking on the EXE file and clicking "Run as Administrator".
+* Your selections will be lost when the game is closed. However the program will remember your choices, just reopen the program and click "Save and Apply" again.
+* If nothing is happening after applying your choices, try right clicking on the EXE file and clicking "Run as Administrator".
