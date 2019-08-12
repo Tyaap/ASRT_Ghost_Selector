@@ -1,4 +1,4 @@
-# S&ASRT Ghost Selector
+# Ghost Selector
 S&amp;ASRT mod that allows you to select a ghost in time attack.
 
 # How to install:
