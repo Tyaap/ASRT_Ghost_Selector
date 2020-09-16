@@ -1,9 +1,129 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
+using System.Windows.Forms;
+using System.Xml;
 
 namespace GhostSelector
 {
-    public class GenericConfigurationElementCollection<T> : ConfigurationElementCollection where T : ConfigurationElement, new()
+    public static class ErrorMessage
     {
+        public static void Message(string message)
+        {
+            DialogResult result = MessageBox.Show(
+                message + "\n\n" +
+                "Do you wish to continue, with this being ignored?",
+                "Error reading configuration.",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.No)
+            {
+                Environment.Exit(0);
+            }
+        }
+
+        public static void UnknownValueMessage(string option)
+        {
+            string message = "Found an unknown value for the following option while reading the config file: " + option;
+            Message(message);
+        }
+
+        public static void UnknownElementMessage(string option)
+        {
+            string message = "Found an unknown element while reading the config file: " + option;
+            Message(message);
+        }
+
+        public static void UnknownAttributeMessage(string option)
+        {
+            string message = "Found an unknown attribute while reading the config file: " + option;
+            Message(message);
+        }
+
+        public static void MissingPropertymessage(string option)
+        {
+            string message = "Could not find a required property while reading the config file: " + option;
+            Message(message);
+        }
+    }
+
+    public class ConfigurationSectionEx : ConfigurationSection
+    {
+        protected override bool OnDeserializeUnrecognizedAttribute(string attribute, string value)
+        {
+            ErrorMessage.UnknownAttributeMessage(attribute + "=\"" + value + "\"");
+
+            return true;
+        }
+
+        protected override bool OnDeserializeUnrecognizedElement(string elementName, XmlReader reader)
+        {
+            ErrorMessage.UnknownElementMessage(elementName);
+
+            return true;
+        }
+
+        protected override object OnRequiredPropertyNotFound(string name)
+        {
+            ErrorMessage.MissingPropertymessage(name);
+
+            return true;
+        }
+    }
+
+    public class ConfigurationElementEx : ConfigurationElement
+    {
+        protected override bool OnDeserializeUnrecognizedAttribute(string attribute, string value)
+        {
+            ErrorMessage.UnknownAttributeMessage(attribute + " = \"" + value + "\"");
+
+            return true;
+        }
+
+        protected override bool OnDeserializeUnrecognizedElement(string elementName, XmlReader reader)
+        {
+            bool result = base.OnDeserializeUnrecognizedElement(elementName, reader);
+
+
+            ErrorMessage.UnknownElementMessage(elementName);
+
+
+            return true;
+        }
+
+        protected override object OnRequiredPropertyNotFound(string name)
+        {
+            ErrorMessage.MissingPropertymessage(name);
+
+            return true;
+        }
+    }
+
+    public class GenericConfigurationElementCollection<T> : ConfigurationElementCollection where T : ConfigurationElementEx, new()
+    {
+        protected override bool OnDeserializeUnrecognizedAttribute(string attribute, string value)
+        {
+            ErrorMessage.UnknownAttributeMessage(attribute + " = \"" + value + "\"");
+
+            return true;
+        }
+
+        protected override bool OnDeserializeUnrecognizedElement(string elementName, XmlReader reader)
+        {
+            bool result = base.OnDeserializeUnrecognizedElement(elementName, reader);
+            if (!result)
+            {
+                ErrorMessage.UnknownElementMessage(elementName);
+            }
+            return true;
+        }
+
+        protected override object OnRequiredPropertyNotFound(string name)
+        {
+            ErrorMessage.MissingPropertymessage(name);
+
+            return true;
+        }
+
         protected override ConfigurationElement CreateNewElement()
         {
             return new T();
@@ -52,107 +172,219 @@ namespace GhostSelector
             {
                 if (BaseGet(index) != null)
                     BaseRemoveAt(index);
+
                 BaseAdd(index, value);
             }
         }
     }
 
-
-    public class ProgramConfigSection : ConfigurationSection
+    public class ProgramConfigSection : ConfigurationSectionEx
     {
-        [ConfigurationProperty("PositionSelector", IsRequired = true)]
+        [ConfigurationProperty("PositionSelector")]
         public PositionSelectorElement PositionSelector
         {
-            get { return (PositionSelectorElement)base["PositionSelector"]; }
-            set { base["PositionSelector"] = value; }
+            get
+            {
+                if (base["PositionSelector"] is PositionSelectorElement tmp)
+                    return tmp;
+                else
+                    return new PositionSelectorElement();
+            }
         }
 
-        [ConfigurationProperty("FastestPlayerSelector", IsRequired = true)]
+        [ConfigurationProperty("FastestPlayerSelector")]
         public FastestPlayerSelectorElement FastestPlayerSelector
         {
-            get { return (FastestPlayerSelectorElement)base["FastestPlayerSelector"]; }
+            get
+            {
+                if (base["FastestPlayerSelector"] is FastestPlayerSelectorElement tmp)
+                    return tmp;
+                else
+                    return new FastestPlayerSelectorElement();
+            }
         }
 
-        [ConfigurationProperty("Graphics", IsRequired = true)]
+        [ConfigurationProperty("Graphics")]
         public GraphicsElement Graphics
         {
-            get { return (GraphicsElement)base["Graphics"]; }
+            get
+            {
+                if (base["Graphics"] is GraphicsElement tmp)
+                    return tmp;
+                else
+                    return new GraphicsElement();
+            }
         }
     }
 
-    public class GraphicsElement : ConfigurationElement
+    public class GraphicsElement : ConfigurationElementEx
     {
-
-        [ConfigurationProperty("HideNameTags", IsRequired = true, DefaultValue = false)]
-        public bool HideNameTags
-        {
-            get { return (bool)this["HideNameTags"]; }
-            set { this["HideNameTags"] = value; }
-        }
-
-        [ConfigurationProperty("HideGhostCars", IsRequired = true, DefaultValue = false)]
+        [ConfigurationProperty("HideGhostCars", DefaultValue = "False")]
         public bool HideGhostCars
         {
-            get { return (bool)this["HideGhostCars"]; }
-            set { this["HideGhostCars"] = value; }
+            get
+            {
+                try
+                {
+                    return (bool)this["HideGhostCars"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("HideGhostCars");
+                    this["HideGhostCars"] = false;
+                    return false;
+                }
+            }
+            set => this["HideGhostCars"] = value;
         }
 
-        [ConfigurationProperty("HidePBGhost", IsRequired = true, DefaultValue = false)]
+        [ConfigurationProperty("HidePBGhost", DefaultValue = "False")]
         public bool HidePBGhost
         {
-            get { return (bool)this["HidePBGhost"]; }
-            set { this["HidePBGhost"] = value; }
+            get
+            {
+                try
+                {
+                    return (bool)this["HidePBGhost"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("HidePBGhost");
+                    this["HidePBGhost"] = false;
+                    return false;
+                }
+            }
+            set => this["HidePBGhost"] = value;
+        }
+
+        [ConfigurationProperty("NameTagOpacity", DefaultValue = "1")]
+        public float NameTagOpacity
+        {
+            get
+            {
+                try
+                {
+                    return (float)this["NameTagOpacity"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("NameTagOpacity");
+                    this["NameTagOpacity"] = 1;
+                    return 1;
+                }
+            }
+            set => this["NameTagOpacity"] = value;
         }
     }
 
-    public class FastestPlayerSelectorElement : ConfigurationElement
+    public class FastestPlayerSelectorElement : ConfigurationElementEx
     {
-        [ConfigurationProperty("Enabled", IsRequired = true, DefaultValue = false)]
+        [ConfigurationProperty("Enabled", DefaultValue = "True")]
         public bool Enabled
         {
-            get { return (bool)this["Enabled"]; }
-            set { this["Enabled"] = value; }
+            get
+            {
+                try
+                {
+                    return (bool)this["Enabled"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("Enabled");
+                    this["Enabled"] = false;
+                    return false;
+                }
+            }
+            set => this["Enabled"] = value;
         }
 
-        [ConfigurationProperty("Players", IsRequired = true)]
+        [ConfigurationProperty("Players")]
         [ConfigurationCollection(typeof(PlayerElement), AddItemName = "Entry", CollectionType = ConfigurationElementCollectionType.BasicMap)]
         public GenericConfigurationElementCollection<PlayerElement> Players
         {
-            get { return (GenericConfigurationElementCollection<PlayerElement>)base["Players"]; }
+            get
+            {
+                if (base["Players"] is GenericConfigurationElementCollection<PlayerElement> tmp)
+                    return tmp;
+                else
+                    return new GenericConfigurationElementCollection<PlayerElement>();
+            }
         }
 
     }
-    public class PlayerElement : ConfigurationElement
+    public class PlayerElement : ConfigurationElementEx
     {
-        [ConfigurationProperty("Name")]
+        [ConfigurationProperty("Name", DefaultValue = "")]
         public string Name
         {
-            get { return (string)this["Name"]; }
-            set { this["Name"] = value; }
+            get
+            {
+                if (this["Name"] is string tmp)
+                    return tmp;
+                else
+                    return "";
+            }
+            set => this["Name"] = value;
         }
 
-        [ConfigurationProperty("SteamId", DefaultValue = (long)0)]
-        public long SteamId
+        [ConfigurationProperty("SteamId", DefaultValue = "0")]
+        public ulong SteamId
         {
-            get { return (long)this["SteamId"]; }
-            set { this["SteamId"] = value; }
+            get
+            {
+                try
+                {
+                    return (ulong)this["SteamId"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("SteamId");
+                    this["SteamId"] = 0;
+                    return 0;
+                }
+            }
+            set => this["SteamId"] = value;
         }
 
-        [ConfigurationProperty("Enabled")]
+        [ConfigurationProperty("Enabled", DefaultValue = "True")]
         public bool Enabled
         {
-            get { return (bool)this["Enabled"]; }
-            set { this["Enabled"] = value; }
+            get
+            {
+                try
+                {
+                    return (bool)this["Enabled"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("Enabled");
+                    this["Enabled"] = true;
+                    return true;
+                }
+            }
+            set => this["Enabled"] = value;
         }
     }
 
-    public class PositionSelectorElement : ConfigurationElement
+    public class PositionSelectorElement : ConfigurationElementEx
     {
-        [ConfigurationProperty("SelectedPosition", IsRequired = true, DefaultValue = (uint)0)]
+        [ConfigurationProperty("SelectedPosition", DefaultValue = "0")]
         public uint SelectedPosition
         {
-            get { return (uint)this["SelectedPosition"]; }
-            set { this["SelectedPosition"] = value; }
+            get
+            {
+                try
+                {
+                    return (uint)this["SelectedPosition"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("SelectedPosition");
+                    this["SelectedPosition"] = 0;
+                    return 0;
+                }
+            }
+            set => this["SelectedPosition"] = value;
         }
     }
 }

@@ -39,7 +39,6 @@
             this.BanlistColumnSteamId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.GroupBoxGraphics = new System.Windows.Forms.GroupBox();
-            this.CheckedListBoxGraphics = new System.Windows.Forms.CheckedListBox();
             this.GroupBox = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.ButtonConfirm = new System.Windows.Forms.Button();
@@ -59,6 +58,10 @@
             this.ListViewPlayers = new System.Windows.Forms.ListView();
             this.NameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SteamIdColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.CheckBoxHideGhostVehicles = new System.Windows.Forms.CheckBox();
+            this.CheckBoxHidePBGhost = new System.Windows.Forms.CheckBox();
+            this.TrackBarNameTagOpacity = new System.Windows.Forms.TrackBar();
+            this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel2.SuspendLayout();
             this.GroupBoxGraphics.SuspendLayout();
             this.GroupBox.SuspendLayout();
@@ -69,6 +72,7 @@
             this.FastestPlayerSelector.SuspendLayout();
             this.TableLayoutPanel1.SuspendLayout();
             this.TableLayoutPanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TrackBarNameTagOpacity)).BeginInit();
             this.SuspendLayout();
             // 
             // columnHeader3
@@ -125,44 +129,32 @@
             this.tableLayoutPanel2.RowCount = 4;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 92F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 86F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 87F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 66F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(381, 490);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(381, 509);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // GroupBoxGraphics
             // 
-            this.GroupBoxGraphics.Controls.Add(this.CheckedListBoxGraphics);
+            this.GroupBoxGraphics.Controls.Add(this.TrackBarNameTagOpacity);
+            this.GroupBoxGraphics.Controls.Add(this.CheckBoxHidePBGhost);
+            this.GroupBoxGraphics.Controls.Add(this.CheckBoxHideGhostVehicles);
+            this.GroupBoxGraphics.Controls.Add(this.label1);
             this.GroupBoxGraphics.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GroupBoxGraphics.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.GroupBoxGraphics.Location = new System.Drawing.Point(3, 341);
+            this.GroupBoxGraphics.Location = new System.Drawing.Point(3, 359);
             this.GroupBoxGraphics.Name = "GroupBoxGraphics";
-            this.GroupBoxGraphics.Size = new System.Drawing.Size(375, 80);
+            this.GroupBoxGraphics.Size = new System.Drawing.Size(375, 81);
             this.GroupBoxGraphics.TabIndex = 10;
             this.GroupBoxGraphics.TabStop = false;
             this.GroupBoxGraphics.Text = "Graphics";
-            // 
-            // CheckedListBoxGraphics
-            // 
-            this.CheckedListBoxGraphics.CheckOnClick = true;
-            this.CheckedListBoxGraphics.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CheckedListBoxGraphics.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CheckedListBoxGraphics.FormattingEnabled = true;
-            this.CheckedListBoxGraphics.Items.AddRange(new object[] {
-            "Hide nametags",
-            "Hide ghost cars",
-            "Hide personal best ghost"});
-            this.CheckedListBoxGraphics.Location = new System.Drawing.Point(3, 19);
-            this.CheckedListBoxGraphics.Name = "CheckedListBoxGraphics";
-            this.CheckedListBoxGraphics.Size = new System.Drawing.Size(369, 58);
-            this.CheckedListBoxGraphics.TabIndex = 11;
             // 
             // GroupBox
             // 
             this.GroupBox.Controls.Add(this.tableLayoutPanel5);
             this.GroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GroupBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.GroupBox.Location = new System.Drawing.Point(3, 427);
+            this.GroupBox.Location = new System.Drawing.Point(3, 446);
             this.GroupBox.Name = "GroupBox";
             this.GroupBox.Size = new System.Drawing.Size(375, 60);
             this.GroupBox.TabIndex = 12;
@@ -196,6 +188,7 @@
             this.ButtonConfirm.TabIndex = 14;
             this.ButtonConfirm.Text = "Save and Apply";
             this.ButtonConfirm.UseVisualStyleBackColor = true;
+            this.ButtonConfirm.Click += new System.EventHandler(this.ButtonConfirm_Click);
             // 
             // ButtonCancel
             // 
@@ -206,8 +199,9 @@
             this.ButtonCancel.Name = "ButtonCancel";
             this.ButtonCancel.Size = new System.Drawing.Size(181, 32);
             this.ButtonCancel.TabIndex = 13;
-            this.ButtonCancel.Text = "Cancel";
+            this.ButtonCancel.Text = "Undo Changes";
             this.ButtonCancel.UseVisualStyleBackColor = true;
+            this.ButtonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
             // 
             // groupBox1
             // 
@@ -288,7 +282,7 @@
             this.FastestPlayerSelector.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.FastestPlayerSelector.Location = new System.Drawing.Point(3, 95);
             this.FastestPlayerSelector.Name = "FastestPlayerSelector";
-            this.FastestPlayerSelector.Size = new System.Drawing.Size(375, 240);
+            this.FastestPlayerSelector.Size = new System.Drawing.Size(375, 258);
             this.FastestPlayerSelector.TabIndex = 4;
             this.FastestPlayerSelector.TabStop = false;
             this.FastestPlayerSelector.Text = "Fastest Player";
@@ -308,7 +302,7 @@
             this.TableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.TableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.TableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.TableLayoutPanel1.Size = new System.Drawing.Size(369, 218);
+            this.TableLayoutPanel1.Size = new System.Drawing.Size(369, 236);
             this.TableLayoutPanel1.TabIndex = 5;
             // 
             // TableLayoutPanel4
@@ -321,7 +315,7 @@
             this.TableLayoutPanel4.Controls.Add(this.ButtonEdit, 2, 0);
             this.TableLayoutPanel4.Controls.Add(this.ButtonRemove, 1, 0);
             this.TableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TableLayoutPanel4.Location = new System.Drawing.Point(3, 181);
+            this.TableLayoutPanel4.Location = new System.Drawing.Point(3, 199);
             this.TableLayoutPanel4.Name = "TableLayoutPanel4";
             this.TableLayoutPanel4.RowCount = 1;
             this.TableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -389,9 +383,10 @@
             this.ListViewPlayers.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.ListViewPlayers.FullRowSelect = true;
             this.ListViewPlayers.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.ListViewPlayers.HideSelection = false;
             this.ListViewPlayers.Location = new System.Drawing.Point(3, 33);
             this.ListViewPlayers.Name = "ListViewPlayers";
-            this.ListViewPlayers.Size = new System.Drawing.Size(363, 142);
+            this.ListViewPlayers.Size = new System.Drawing.Size(363, 160);
             this.ListViewPlayers.TabIndex = 6;
             this.ListViewPlayers.UseCompatibleStateImageBehavior = false;
             this.ListViewPlayers.View = System.Windows.Forms.View.Details;
@@ -406,20 +401,65 @@
             this.SteamIdColumn.Text = "Steam ID";
             this.SteamIdColumn.Width = 171;
             // 
+            // CheckBoxHideGhostVehicles
+            // 
+            this.CheckBoxHideGhostVehicles.AutoSize = true;
+            this.CheckBoxHideGhostVehicles.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBoxHideGhostVehicles.Location = new System.Drawing.Point(21, 25);
+            this.CheckBoxHideGhostVehicles.Name = "CheckBoxHideGhostVehicles";
+            this.CheckBoxHideGhostVehicles.Size = new System.Drawing.Size(129, 19);
+            this.CheckBoxHideGhostVehicles.TabIndex = 12;
+            this.CheckBoxHideGhostVehicles.Text = "Hide ghost vehicles";
+            this.CheckBoxHideGhostVehicles.UseVisualStyleBackColor = true;
+            // 
+            // CheckBoxHidePBGhost
+            // 
+            this.CheckBoxHidePBGhost.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBoxHidePBGhost.Location = new System.Drawing.Point(21, 52);
+            this.CheckBoxHidePBGhost.Name = "CheckBoxHidePBGhost";
+            this.CheckBoxHidePBGhost.Size = new System.Drawing.Size(114, 19);
+            this.CheckBoxHidePBGhost.TabIndex = 0;
+            this.CheckBoxHidePBGhost.Text = "Hide PB ghost";
+            this.CheckBoxHidePBGhost.UseVisualStyleBackColor = true;
+            // 
+            // TrackBarNameTagOpacity
+            // 
+            this.TrackBarNameTagOpacity.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TrackBarNameTagOpacity.LargeChange = 10;
+            this.TrackBarNameTagOpacity.Location = new System.Drawing.Point(196, 39);
+            this.TrackBarNameTagOpacity.Margin = new System.Windows.Forms.Padding(0);
+            this.TrackBarNameTagOpacity.Maximum = 100;
+            this.TrackBarNameTagOpacity.Name = "TrackBarNameTagOpacity";
+            this.TrackBarNameTagOpacity.Size = new System.Drawing.Size(136, 32);
+            this.TrackBarNameTagOpacity.TabIndex = 13;
+            this.TrackBarNameTagOpacity.TickFrequency = 10;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label1.Location = new System.Drawing.Point(213, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(101, 15);
+            this.label1.TabIndex = 31;
+            this.label1.Text = "Name tag opacity";
+            // 
             // MainForm
             // 
             this.AcceptButton = this.ButtonConfirm;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.ButtonCancel;
-            this.ClientSize = new System.Drawing.Size(381, 490);
+            this.ClientSize = new System.Drawing.Size(381, 509);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "Ghost Selector";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.GroupBoxGraphics.ResumeLayout(false);
+            this.GroupBoxGraphics.PerformLayout();
             this.GroupBox.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -430,6 +470,7 @@
             this.TableLayoutPanel1.ResumeLayout(false);
             this.TableLayoutPanel1.PerformLayout();
             this.TableLayoutPanel4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.TrackBarNameTagOpacity)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -465,6 +506,9 @@
         internal System.Windows.Forms.Button ButtonEdit;
         internal System.Windows.Forms.Button ButtonRemove;
         private System.Windows.Forms.GroupBox GroupBoxGraphics;
-        private System.Windows.Forms.CheckedListBox CheckedListBoxGraphics;
+        private System.Windows.Forms.TrackBar TrackBarNameTagOpacity;
+        private System.Windows.Forms.CheckBox CheckBoxHidePBGhost;
+        private System.Windows.Forms.CheckBox CheckBoxHideGhostVehicles;
+        private System.Windows.Forms.Label label1;
     }
 }

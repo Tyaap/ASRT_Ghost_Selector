@@ -66,13 +66,15 @@
     <Compile Include="DialogBoxPlayer.Designer.cs">
       <DependentUpon>DialogBoxPlayer.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameMemory.cs" />
+    <Compile Include="GameMods.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MemoryHelper.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProgramConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

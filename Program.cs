@@ -6,7 +6,7 @@ namespace GhostSelector
 {
     public class Program
     {
-        private static Configuration configFile;
+        public static Configuration configFile;
         public static ProgramConfigSection Config;
 
         static void Main()
@@ -27,29 +27,7 @@ namespace GhostSelector
                 Application.Exit();
             }
 
-            using (MainForm MainForm = new MainForm())
-            {
-                DialogResult result = MainForm.ShowDialog();
-
-                if (result == DialogResult.OK)
-                {
-                    configFile.Save();
-
-                    if (GameMemory.GetHandle())
-                    {
-                        GameMemory.LoadSettings();
-                        MessageBox.Show(
-                            "Your ghost settings have been applied!" +
-                            "\n\nReturn to the main menu to ensure that all settings are applied.",
-                            "Ghost Selector", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                        MessageBox.Show(
-                            "Your ghost settings have not been applied, but they have been saved." +
-                            "\n\nTo apply your settings, you need to start the game first.",
-                            "Ghost Selector", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
+            Application.Run(new MainForm());
         } 
     }
 }
