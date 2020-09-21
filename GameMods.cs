@@ -192,15 +192,13 @@ namespace GhostSelector
                 myCode.AddRange(new byte[] { 0x8B, 0x98, 0x0C, 0x02, 0x00, 0x00 });         // mov ebx, dword [eax+0x20c]
                 myCode.AddRange(new byte[] { 0x39, 0x35 });                                 // cmp dword [...], esi
                 myCode.AddRange(BitConverter.GetBytes(codeAddress - 20));                   // ... codeAddress - 20
-                myCode.Add(0x75);                                                           // jne ...
-                myCode.Add(12);                                                             // ... (next instruction) + 12
+                myCode.AddRange(new byte[] { 0x75, 0xC });                                  // jne (next instruction) + 12
                 myCode.AddRange(new byte[] { 0x8b, 0x15 });                                 // mov edx, dword [...]
                 myCode.AddRange(BitConverter.GetBytes(codeAddress - 12));                    // ... codeAddress - 12
                 myCode.AddRange(new byte[] { 0x89, 0x90, 0x0C, 0x02, 0x00, 0x00 });         // mov dword [eax+0x20c], edx
                 myCode.AddRange(new byte[] { 0x39, 0x35 });                                 // cmp dword [...], esi
                 myCode.AddRange(BitConverter.GetBytes(codeAddress - 16));                   // ... = codeAddress - 16
-                myCode.Add(0x75);                                                           // jne ...
-                myCode.Add(12);                                                             // ... (next instruction) + 12
+                myCode.AddRange(new byte[] { 0x75, 0xC });                                  // jne (next instruction) + 12
                 myCode.AddRange(new byte[] { 0x8b, 0x15 });                                 // mov edx, dword [...]
                 myCode.AddRange(BitConverter.GetBytes(codeAddress - 8));                    // ... codeAddress - 8
                 myCode.AddRange(new byte[] { 0x89, 0x90, 0x0C, 0x02, 0x00, 0x00 });         // mov dword [eax+0x20c], edx
