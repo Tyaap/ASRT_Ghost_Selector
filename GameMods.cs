@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Windows.Forms;
 using static MemoryHelper;
 
 namespace GhostSelector
@@ -109,6 +110,7 @@ namespace GhostSelector
             }
 
             SetNameTagOpacity(Program.Config.Graphics.NameTagOpacity);
+            SetGhostAppearance(0xFF00FF00, 0xFF0000FF, 1.0f);
         }
 
         public static void SetNameTagOpacity(float opacity)
@@ -142,6 +144,138 @@ namespace GhostSelector
             }
             // Set the opacity
             Write(codeAddress + 13, opacity);
+        }
+
+        public static void SetGhostAppearance(uint pbColour, uint onlineColour, float opacity)
+        {
+            int codeAddress;
+            if (ReadByte(0x8999EE) == 0xE8)
+            {
+                // code is already present, get the address
+                codeAddress = ReadInt(0x8999EF) + 0x8999EE + 5;
+            }
+            else
+            {
+                // code not present, load it
+                codeAddress = Allocate(0, 100) + 20;
+                List<byte> myCode = new List<byte>();
+
+                // [codeAddress - 20] = PB ghost identifier
+                // [codeAddress - 16] = online ghost identifier
+                // [codeAddress - 12] = PB ghost colour
+                // [codeAddress - 8]  = online ghost colour
+                // [codeAddress - 4]  = ghost opacity
+
+                // Code part 1 - save PB ghost identifier #1
+                int codeAddress1 = codeAddress;
+                myCode.AddRange(new byte[] { 0x8D, 0x8D, 0x90, 0x4B, 0x00, 0x00 });         // lea ecx, [ebp+4B90]
+                myCode.AddRange(new byte[] { 0x89, 0x0D });                                 // mov dword [...], ecx
+                myCode.AddRange(BitConverter.GetBytes(codeAddress - 20));                   // ... codeAddress - 16
+                myCode.Add(0xC3);                                                           // ret
+
+                // Code part 2 - save online ghost identifier
+                int codeAddress2 = codeAddress + myCode.Count;
+                myCode.AddRange(new byte[] { 0x8D, 0x8D, 0xE0, 0xC7, 0x01, 0x00 });         // lea ecx, [ebp+1C7E0]
+                myCode.AddRange(new byte[] { 0x89, 0x0D });                                 // mov dword [...], ecx
+                myCode.AddRange(BitConverter.GetBytes(codeAddress - 16));                   // ... codeAddress - 12
+                myCode.Add(0xC3);                                                           // ret
+
+                // Code part 3 - save PB ghost identifier #2
+                int codeAddress3 = codeAddress + myCode.Count;
+                myCode.AddRange(new byte[] { 0x81, 0xC1, 0x90, 0x4B, 0x00, 0x00 });         // add ecx, 4B90
+                myCode.AddRange(new byte[] { 0x89, 0x0D });                                 // mov dword [...], ecx
+                myCode.AddRange(BitConverter.GetBytes(codeAddress - 20));                   // ... codeAddress - 16
+                myCode.Add(0xC3);                                                           // ret
+
+                // Code part 4 - backup original colour, replace it
+                int codeAddress4 = codeAddress + myCode.Count;
+                myCode.AddRange(new byte[] { 0x8B, 0x98, 0x0C, 0x02, 0x00, 0x00 });         // mov ebx, dword [eax+0x20c]
+                myCode.AddRange(new byte[] { 0x39, 0x35 });                                 // cmp dword [...], esi
+                myCode.AddRange(BitConverter.GetBytes(codeAddress - 20));                   // ... codeAddress - 20
+                myCode.Add(0x75);                                                           // jne ...
+                myCode.Add(12);                                                             // ... (next instruction) + 12
+                myCode.AddRange(new byte[] { 0x8b, 0x15 });                                 // mov edx, dword [...]
+                myCode.AddRange(BitConverter.GetBytes(codeAddress - 12));                    // ... codeAddress - 12
+                myCode.AddRange(new byte[] { 0x89, 0x90, 0x0C, 0x02, 0x00, 0x00 });         // mov dword [eax+0x20c], edx
+                myCode.AddRange(new byte[] { 0x39, 0x35 });                                 // cmp dword [...], esi
+                myCode.AddRange(BitConverter.GetBytes(codeAddress - 16));                   // ... = codeAddress - 16
+                myCode.Add(0x75);                                                           // jne ...
+                myCode.Add(12);                                                             // ... (next instruction) + 12
+                myCode.AddRange(new byte[] { 0x8b, 0x15 });                                 // mov edx, dword [...]
+                myCode.AddRange(BitConverter.GetBytes(codeAddress - 8));                    // ... codeAddress - 8
+                myCode.AddRange(new byte[] { 0x89, 0x90, 0x0C, 0x02, 0x00, 0x00 });         // mov dword [eax+0x20c], edx
+                myCode.AddRange(new byte[] { 0x0F, 0xB6, 0x90, 0x0C, 0x02, 0x00, 0x00 });   // movzx edx, byte [eax+0x20c]
+                myCode.Add(0xC3);                                                           // ret
+
+                // Code part 5 - restore original colour
+                int codeAddress5 = codeAddress + myCode.Count;
+                myCode.AddRange(new byte[] { 0x0F, 0xB6, 0x90, 0x0E, 0x02, 0x00, 0x00 });   // movzx edx, byte [eax+0x20e]
+                myCode.AddRange(new byte[] { 0x89, 0x98, 0x0C, 0x02, 0x00, 0x00 });         // mov dword [eax+0x20c],ebx
+                myCode.AddRange(new byte[] { 0x89, 0xD0 });                                 // mov eax, edx
+                myCode.Add(0xC3);                                                           // ret
+
+                // Code part 6 - opacity
+                int codeAddress6 = codeAddress + myCode.Count;
+                myCode.AddRange(new byte[] { 0xD9, 0x05 });                                 // fld st0, dword [...]
+                myCode.AddRange(BitConverter.GetBytes(codeAddress - 4));                    // ... codeAddress - 4
+                myCode.AddRange(new byte[] { 0xD9, 0x58, 0x0C });                           // fstp dword [eax+0xC], st0
+                myCode.Add(0xC3);                                                           // ret
+
+                Write(codeAddress, myCode.ToArray());
+
+                // Jump 1
+                List<byte> jumpCode = new List<byte>();
+                jumpCode.Add(0xE8);                                                         // call ...
+                jumpCode.AddRange(BitConverter.GetBytes(codeAddress1 - 0x8999EE - 5));      // ... codeAddress1
+                jumpCode.Add(0x90);                                                         // nop
+                Write(0x8999EE, jumpCode.ToArray());
+
+                // Jump 2
+                jumpCode.Clear();
+                jumpCode.Add(0xE8);                                                         // call ...
+                jumpCode.AddRange(BitConverter.GetBytes(codeAddress2 - 0x899A33 - 5));      // ... codeAddress2
+                jumpCode.Add(0x90);                                                         // nop
+                Write(0x899A33, jumpCode.ToArray());
+
+                // Jump 3
+                jumpCode.Clear();
+                jumpCode.Add(0xE8);                                                         // call ...
+                jumpCode.AddRange(BitConverter.GetBytes(codeAddress3 - 0x899A6F - 5));      // ... codeAddress3
+                jumpCode.Add(0x90);                                                         // nop
+                Write(0x899A6F, jumpCode.ToArray());
+
+                // Jump 4
+                jumpCode.Clear();
+                jumpCode.Add(0xE8);                                                         // call ...
+                jumpCode.AddRange(BitConverter.GetBytes(codeAddress4 - 0x8D3283 - 5));      // ... codeAddress4
+                jumpCode.Add(0x90);                                                         // nop
+                jumpCode.Add(0x90);                                                         // nop
+                Write(0x8D3283, jumpCode.ToArray());
+
+                // Jump 5
+                jumpCode.Clear();
+                jumpCode.Add(0xE8);                                                         // call ...
+                jumpCode.AddRange(BitConverter.GetBytes(codeAddress5 - 0x8D32A5 - 5));      // ... codeAddress5
+                jumpCode.Add(0x90);                                                         // nop
+                jumpCode.Add(0x90);                                                         // nop
+                Write(0x8D32A5, jumpCode.ToArray());
+
+                // Jump 6
+                jumpCode.Clear();
+                jumpCode.Add(0xE8);                                                         // call ...
+                jumpCode.AddRange(BitConverter.GetBytes(codeAddress6 - 0x8D3309 - 5));      // ... codeAddress6
+                Write(0x8D3309, jumpCode.ToArray());
+
+                // Jump 7
+                jumpCode.Clear();
+                jumpCode.Add(0xE8);                                                         // call ...
+                jumpCode.AddRange(BitConverter.GetBytes(codeAddress6 - 0x8D3353 - 5));      // ... codeAddress6
+                Write(0x8D3353, jumpCode.ToArray());
+            }
+            // Set the appearance
+            Write(codeAddress - 12, pbColour);
+            Write(codeAddress - 8, onlineColour);
+            Write(codeAddress - 4, opacity);
         }
     }
 }
