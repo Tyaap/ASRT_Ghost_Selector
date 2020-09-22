@@ -525,7 +525,7 @@ public static class MemoryHelper
 
     public static void Write(int address, byte[] bytes)
     {
-        Write((UIntPtr)address, bytes);
+        Write((UIntPtr)(uint)address, bytes);
     }
     public static void Write(uint address, byte[] bytes)
     {

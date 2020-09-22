@@ -22,9 +22,14 @@ namespace GhostSelector
             {
                 ListViewPlayers.Items.Add(new ListViewItem(new string[] { Player.Name, Player.SteamId.ToString() }) { Checked = Player.Enabled });
             }
-            CheckBoxHideGhostVehicles.Checked = Program.Config.Graphics.HideGhostCars;
-            CheckBoxHidePBGhost.Checked = Program.Config.Graphics.HidePBGhost;
-            TrackBarNameTagOpacity.Value = (int)(Program.Config.Graphics.NameTagOpacity * 100);
+
+            TrackBarNameTagOpacity.Value = (int)(Program.Config.Graphics.Nametag.Opacity * 100);
+            TrackBarGhostOpacity.Value = (int)(Program.Config.Graphics.PBGhost.Opacity * 100);
+            CheckBoxHidePBGhost.Checked = Program.Config.Graphics.PBGhost.Hide;
+            CheckBoxPBGhostColour.Checked = Program.Config.Graphics.PBGhost.UseCustomColour;
+            ButtonPBGhostColour.BackColor = Program.Config.Graphics.PBGhost.Colour;
+            CheckBoxOnlineGhostColour.Checked = Program.Config.Graphics.OnlineGhost.UseCustomColour;
+            ButtonOnlineGhostColour.BackColor = Program.Config.Graphics.OnlineGhost.Colour;
         }
 
         private void ButtonConfirm_Click(object sender, EventArgs e)
@@ -41,9 +46,13 @@ namespace GhostSelector
                     SteamId = ulong.Parse(Player.SubItems[1].Text)
                 });
 
-            Program.Config.Graphics.HideGhostCars = CheckBoxHideGhostVehicles.Checked;
-            Program.Config.Graphics.HidePBGhost = CheckBoxHidePBGhost.Checked;
-            Program.Config.Graphics.NameTagOpacity = (float)TrackBarNameTagOpacity.Value / 100;
+            Program.Config.Graphics.Nametag.Opacity = (float)TrackBarNameTagOpacity.Value / 100;
+            Program.Config.Graphics.PBGhost.Opacity = Program.Config.Graphics.OnlineGhost.Opacity = (float)TrackBarGhostOpacity.Value / 100;
+            Program.Config.Graphics.PBGhost.Hide = CheckBoxHidePBGhost.Checked;
+            Program.Config.Graphics.PBGhost.UseCustomColour = CheckBoxPBGhostColour.Checked;
+            Program.Config.Graphics.PBGhost.Colour = ButtonPBGhostColour.BackColor;
+            Program.Config.Graphics.OnlineGhost.UseCustomColour = CheckBoxOnlineGhostColour.Checked;
+            Program.Config.Graphics.OnlineGhost.Colour = ButtonOnlineGhostColour.BackColor;
 
             Program.configFile.Save();
 
@@ -52,13 +61,14 @@ namespace GhostSelector
                 GameMods.LoadSettings();
                 MessageBox.Show(
                     "Your settings have been applied!" +
-                    "\n\nReturn to the main menu to ensure that all settings are applied.",
+                    "\nThey will be active until you close the game." +
+                    "\nReturn to the main menu to ensure the selected ghost is downloaded.",
                     "Ghost Selector", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
                 MessageBox.Show(
-                    "Your settings have not been applied, but they have been saved." +
+                    "Your settings have not been applied, but they were saved." +
                     "\n\nTo apply your settings, you need to start the game first.",
                     "Ghost Selector", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -155,6 +165,28 @@ namespace GhostSelector
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
             LoadConfig();
+        }
+
+        private void ButtonPBGhostColour_Click(object sender, EventArgs e)
+        {
+            using (ColorDialog colorDialog = new ColorDialog() { Color = ButtonPBGhostColour.BackColor, FullOpen = true, })
+            {
+                if (colorDialog.ShowDialog() == DialogResult.OK)
+                {
+                    ButtonPBGhostColour.BackColor = colorDialog.Color;
+                }
+            }
+        }
+
+        private void ButtonOnlineGhostColour_Click(object sender, EventArgs e)
+        {
+            using (ColorDialog colorDialog = new ColorDialog() { Color = ButtonOnlineGhostColour.BackColor, FullOpen = true, })
+            {
+                if (colorDialog.ShowDialog() == DialogResult.OK)
+                {
+                    ButtonOnlineGhostColour.BackColor = colorDialog.Color;
+                }
+            }
         }
     }
 }

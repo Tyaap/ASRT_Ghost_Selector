@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 using static MemoryHelper;
 
@@ -91,16 +92,7 @@ namespace GhostSelector
                 }
             }
 
-            if (Program.Config.Graphics.HideGhostCars)
-            {
-                Write(addressHideGhostCar, hideGhostCar);
-            }
-            else
-            {
-                Write(addressHideGhostCar, hideGhostCar_disable);
-            }
-
-            if (Program.Config.Graphics.HidePBGhost)
+            if (Program.Config.Graphics.PBGhost.Hide)
             {
                 Write(addressHidePBGhost, hidePBGhost);
             }
@@ -109,8 +101,11 @@ namespace GhostSelector
                 Write(addressHidePBGhost, hidePBGhost_disable);
             }
 
-            SetNameTagOpacity(Program.Config.Graphics.NameTagOpacity);
-            SetGhostAppearance(0xFF00FF00, 0xFF0000FF, 1.0f);
+            SetNameTagOpacity(Program.Config.Graphics.Nametag.Opacity);
+            CustomGhostAppearance(
+                Program.Config.Graphics.PBGhost.UseCustomColour ? ToRGBA(Program.Config.Graphics.PBGhost.Colour) : 0,
+                Program.Config.Graphics.OnlineGhost.UseCustomColour ? ToRGBA(Program.Config.Graphics.OnlineGhost.Colour) : 0,
+                Program.Config.Graphics.PBGhost.Opacity);
         }
 
         public static void SetNameTagOpacity(float opacity)
@@ -146,7 +141,7 @@ namespace GhostSelector
             Write(codeAddress + 13, opacity);
         }
 
-        public static void SetGhostAppearance(uint pbColour, uint onlineColour, float opacity)
+        public static void CustomGhostAppearance(int pbColour, int onlineColour, float opacity)
         {
             int codeAddress;
             if (ReadByte(0x8999EE) == 0xE8)
@@ -160,47 +155,48 @@ namespace GhostSelector
                 codeAddress = Allocate(0, 100) + 20;
                 List<byte> myCode = new List<byte>();
 
-                // [codeAddress - 20] = PB ghost identifier
-                // [codeAddress - 16] = online ghost identifier
-                // [codeAddress - 12] = PB ghost colour
-                // [codeAddress - 8]  = online ghost colour
-                // [codeAddress - 4]  = ghost opacity
+                // [codeAddress - 0x14] = PB ghost pointer
+                // [codeAddress - 0x10] = online ghost pointer
+                // [codeAddress - 0xC]  = PB ghost colour
+                // [codeAddress - 0x8]  = online ghost colour
+                // [codeAddress - 0x4]  = ghost opacity
 
-                // Code part 1 - save PB ghost identifier #1
+                // Code part 1 - save PB ghost pointer #1
                 int codeAddress1 = codeAddress;
                 myCode.AddRange(new byte[] { 0x8D, 0x8D, 0x90, 0x4B, 0x00, 0x00 });         // lea ecx, [ebp+4B90]
                 myCode.AddRange(new byte[] { 0x89, 0x0D });                                 // mov dword [...], ecx
-                myCode.AddRange(BitConverter.GetBytes(codeAddress - 20));                   // ... codeAddress - 16
+                myCode.AddRange(BitConverter.GetBytes(codeAddress - 0x14));                   // ... codeAddress - 0x14
                 myCode.Add(0xC3);                                                           // ret
 
-                // Code part 2 - save online ghost identifier
+                // Code part 2 - save online ghost pointer
                 int codeAddress2 = codeAddress + myCode.Count;
                 myCode.AddRange(new byte[] { 0x8D, 0x8D, 0xE0, 0xC7, 0x01, 0x00 });         // lea ecx, [ebp+1C7E0]
                 myCode.AddRange(new byte[] { 0x89, 0x0D });                                 // mov dword [...], ecx
-                myCode.AddRange(BitConverter.GetBytes(codeAddress - 16));                   // ... codeAddress - 12
+                myCode.AddRange(BitConverter.GetBytes(codeAddress - 0x10));                 // ... codeAddress - 0x10
                 myCode.Add(0xC3);                                                           // ret
 
-                // Code part 3 - save PB ghost identifier #2
+                // Code part 3 - save PB ghost pointer #2
                 int codeAddress3 = codeAddress + myCode.Count;
                 myCode.AddRange(new byte[] { 0x81, 0xC1, 0x90, 0x4B, 0x00, 0x00 });         // add ecx, 4B90
                 myCode.AddRange(new byte[] { 0x89, 0x0D });                                 // mov dword [...], ecx
-                myCode.AddRange(BitConverter.GetBytes(codeAddress - 20));                   // ... codeAddress - 16
+                myCode.AddRange(BitConverter.GetBytes(codeAddress - 0x14));                 // ... codeAddress - 0x14
                 myCode.Add(0xC3);                                                           // ret
 
                 // Code part 4 - backup original colour, replace it
                 int codeAddress4 = codeAddress + myCode.Count;
                 myCode.AddRange(new byte[] { 0x8B, 0x98, 0x0C, 0x02, 0x00, 0x00 });         // mov ebx, dword [eax+0x20c]
                 myCode.AddRange(new byte[] { 0x39, 0x35 });                                 // cmp dword [...], esi
-                myCode.AddRange(BitConverter.GetBytes(codeAddress - 20));                   // ... codeAddress - 20
-                myCode.AddRange(new byte[] { 0x75, 0xC });                                  // jne (next instruction) + 12
+                myCode.AddRange(BitConverter.GetBytes(codeAddress - 0x14));                 // ... codeAddress - 0x14
+                myCode.AddRange(new byte[] { 0x75, 0xC });                                  // jne (next instruction) + 0xC
                 myCode.AddRange(new byte[] { 0x8b, 0x15 });                                 // mov edx, dword [...]
-                myCode.AddRange(BitConverter.GetBytes(codeAddress - 12));                    // ... codeAddress - 12
+                myCode.AddRange(BitConverter.GetBytes(codeAddress - 0xC));                  // ... codeAddress - 0xC
                 myCode.AddRange(new byte[] { 0x89, 0x90, 0x0C, 0x02, 0x00, 0x00 });         // mov dword [eax+0x20c], edx
                 myCode.AddRange(new byte[] { 0x39, 0x35 });                                 // cmp dword [...], esi
-                myCode.AddRange(BitConverter.GetBytes(codeAddress - 16));                   // ... = codeAddress - 16
-                myCode.AddRange(new byte[] { 0x75, 0xC });                                  // jne (next instruction) + 12
+                myCode.AddRange(BitConverter.GetBytes(codeAddress - 0x10));                 // ... = codeAddress - 0x10
+                MessageBox.Show(myCode.Count.ToString("X"));
+                myCode.AddRange(new byte[] { 0x75, 0xC });                                  // jne (next instruction) + 0xC
                 myCode.AddRange(new byte[] { 0x8b, 0x15 });                                 // mov edx, dword [...]
-                myCode.AddRange(BitConverter.GetBytes(codeAddress - 8));                    // ... codeAddress - 8
+                myCode.AddRange(BitConverter.GetBytes(codeAddress - 0x8));                  // ... codeAddress - 0x8
                 myCode.AddRange(new byte[] { 0x89, 0x90, 0x0C, 0x02, 0x00, 0x00 });         // mov dword [eax+0x20c], edx
                 myCode.AddRange(new byte[] { 0x0F, 0xB6, 0x90, 0x0C, 0x02, 0x00, 0x00 });   // movzx edx, byte [eax+0x20c]
                 myCode.Add(0xC3);                                                           // ret
@@ -215,7 +211,7 @@ namespace GhostSelector
                 // Code part 6 - opacity
                 int codeAddress6 = codeAddress + myCode.Count;
                 myCode.AddRange(new byte[] { 0xD9, 0x05 });                                 // fld st0, dword [...]
-                myCode.AddRange(BitConverter.GetBytes(codeAddress - 4));                    // ... codeAddress - 4
+                myCode.AddRange(BitConverter.GetBytes(codeAddress - 0x4));                  // ... codeAddress - 0x4
                 myCode.AddRange(new byte[] { 0xD9, 0x58, 0x0C });                           // fstp dword [eax+0xC], st0
                 myCode.Add(0xC3);                                                           // ret
 
@@ -270,10 +266,96 @@ namespace GhostSelector
                 jumpCode.AddRange(BitConverter.GetBytes(codeAddress6 - 0x8D3353 - 5));      // ... codeAddress6
                 Write(0x8D3353, jumpCode.ToArray());
             }
-            // Set the appearance
-            Write(codeAddress - 12, pbColour);
-            Write(codeAddress - 8, onlineColour);
-            Write(codeAddress - 4, opacity);
+
+            int pbPtr = ReadInt(codeAddress - 0x14);
+            int onlinePtr = ReadInt(codeAddress - 0x10);
+            if (pbColour != 0) // 0 = use default colours
+            {
+                Write(codeAddress + 0x33, (byte)0x75); // code part 4: jmp -> jne
+                Write(codeAddress - 0xC, pbColour); // Set colour for new ghosts
+                SetGhostAppearance(pbPtr, pbColour, opacity); // Set appearance for existing ghosts
+            }
+            else
+            {
+                Write(codeAddress + 0x33, (byte)0xEB); // code part 4: jne -> jmp
+                int defaultColour = GetDefaultGhostColour(pbPtr);
+                if (defaultColour != 0)
+                {
+                    SetGhostAppearance(pbPtr, defaultColour, opacity);
+                }
+            }
+
+            if (onlineColour != 0)
+            {
+                Write(codeAddress + 0x47, (byte)0x75); // code part 4: jmp -> jne
+                Write(codeAddress - 0x8, onlineColour);
+                SetGhostAppearance(onlinePtr, onlineColour, opacity);
+            }
+            else
+            {
+                Write(codeAddress + 0x47, (byte)0xEB); // code part 4: jne -> jmp
+                int defaultColour = GetDefaultGhostColour(pbPtr);
+                if (defaultColour > 0)
+                {
+                    SetGhostAppearance(onlinePtr, defaultColour, opacity);
+                }
+            }
+
+            Write(codeAddress - 0x4, opacity); // set opacity for new ghosts
+        }
+
+        static void SetGhostAppearance(int ghostPtr, int colour, float opacity)
+        {
+            if (ghostPtr == 0)
+            {
+                return;
+            }
+            int tmp1 = ReadInt(ghostPtr + 0x84);
+            tmp1 = ReadInt(tmp1 + 0x5C);
+            tmp1 = ReadInt(tmp1 + 0x24);
+            tmp1 = ReadInt(tmp1 + 0x20);
+            if (!readSuccess)
+            {
+                return;
+            }
+            int tmp2 = ReadInt(ghostPtr + 0x88);
+            tmp2 = ReadInt(tmp2 + 0x5C);
+            tmp2 = ReadInt(tmp2 + 0x24);
+            tmp2 = ReadInt(tmp2 + 0x20);
+            if (!readSuccess)
+            {
+                return;
+            }
+            // ghost exists, so update the appearance
+            float blue = ((colour & 0x00FF0000) >> 16) * (25f / 255f);
+            float green = ((colour & 0x0000FF00) >> 8) * (25f / 255f);
+            float red = (colour & 0x000000FF) * (25f / 255f);
+            Write(tmp1, red);
+            Write(tmp2, red);
+            Write(tmp1 + 0x4, green);
+            Write(tmp2 + 0x4, green);
+            Write(tmp1 + 0x8, blue);
+            Write(tmp2 + 0x8, blue);
+            Write(tmp1 + 0xC, opacity);
+            Write(tmp2 + 0xC, opacity);
+        }
+
+        public static int GetDefaultGhostColour(int ghostPtr)
+        {
+            if (ghostPtr == 0)
+            {
+                return 0;
+            }
+            return ReadInt(ReadInt(ghostPtr + 0x80) + 0x20C);
+        }
+
+        static int ToRGBA(Color colour)
+        {
+            int argb = colour.R +
+                       (colour.G << 8) +
+                       (colour.B << 16) +
+                       (colour.A << 24);
+            return argb;
         }
     }
 }

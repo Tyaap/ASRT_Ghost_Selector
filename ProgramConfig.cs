@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -219,61 +220,201 @@ namespace GhostSelector
 
     public class GraphicsElement : ConfigurationElementEx
     {
-        [ConfigurationProperty("HideGhostCars", DefaultValue = "False")]
-        public bool HideGhostCars
+        [ConfigurationProperty("Nametag")]
+        public NametagElement Nametag
         {
             get
             {
-                try
-                {
-                    return (bool)this["HideGhostCars"];
-                }
-                catch
-                {
-                    ErrorMessage.UnknownValueMessage("HideGhostCars");
-                    this["HideGhostCars"] = false;
-                    return false;
-                }
+                if (base["Nametag"] is NametagElement tmp)
+                    return tmp;
+                else
+                    return new NametagElement();
             }
-            set => this["HideGhostCars"] = value;
         }
 
-        [ConfigurationProperty("HidePBGhost", DefaultValue = "False")]
-        public bool HidePBGhost
+        [ConfigurationProperty("PBGhost")]
+        public PBGhostElement PBGhost
         {
             get
             {
-                try
-                {
-                    return (bool)this["HidePBGhost"];
-                }
-                catch
-                {
-                    ErrorMessage.UnknownValueMessage("HidePBGhost");
-                    this["HidePBGhost"] = false;
-                    return false;
-                }
+                if (base["PBGhost"] is PBGhostElement tmp)
+                    return tmp;
+                else
+                    return new PBGhostElement();
             }
-            set => this["HidePBGhost"] = value;
         }
 
-        [ConfigurationProperty("NameTagOpacity", DefaultValue = "1")]
-        public float NameTagOpacity
+        [ConfigurationProperty("OnlineGhost")]
+        public OnlineGhostElement OnlineGhost
+        {
+            get
+            {
+                if (base["OnlineGhost"] is OnlineGhostElement tmp)
+                    return tmp;
+                else
+                    return new OnlineGhostElement();
+            }
+        }
+    }
+
+    public class NametagElement : ConfigurationElementEx
+    {
+        [ConfigurationProperty("Opacity", DefaultValue = "1")]
+        public float Opacity
         {
             get
             {
                 try
                 {
-                    return (float)this["NameTagOpacity"];
+                    return (float)this["Opacity"];
                 }
                 catch
                 {
-                    ErrorMessage.UnknownValueMessage("NameTagOpacity");
-                    this["NameTagOpacity"] = 1;
+                    ErrorMessage.UnknownValueMessage("Opacity");
+                    this["Opacity"] = 1;
                     return 1;
                 }
             }
-            set => this["NameTagOpacity"] = value;
+            set => this["Opacity"] = value;
+        }
+    }
+
+    public class PBGhostElement : ConfigurationElementEx
+    {
+        [ConfigurationProperty("Hide", DefaultValue = "false")]
+        public bool Hide
+        {
+            get
+            {
+                try
+                {
+                    return (bool)this["Hide"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("Hide");
+                    this["Hide"] = false;
+                    return false;
+                }
+            }
+            set => this["Hide"] = value;
+        }
+
+        [ConfigurationProperty("Opacity", DefaultValue = "1")]
+        public float Opacity
+        {
+            get
+            {
+                try
+                {
+                    return (float)this["Opacity"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("Opacity");
+                    this["Opacity"] = 1;
+                    return 1;
+                }
+            }
+            set => this["Opacity"] = value;
+        }
+
+        [ConfigurationProperty("UseCustomColour", DefaultValue = "false")]
+        public bool UseCustomColour
+        {
+            get
+            {
+                try
+                {
+                    return (bool)this["UseCustomColour"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("UseCustomColour");
+                    this["UseCustomColour"] = false;
+                    return false;
+                }
+            }
+            set => this["UseCustomColour"] = value;
+        }
+
+        [ConfigurationProperty("Colour", DefaultValue = "magenta")]
+        public Color Colour
+        {
+            get
+            {
+                try
+                {
+                    return (Color)this["Colour"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("Colour");
+                    this["Colour"] = Color.Magenta;
+                    return Color.Magenta;
+                }
+            }
+            set => this["Colour"] = value;
+        }
+    }
+
+    public class OnlineGhostElement : ConfigurationElementEx
+    {
+        [ConfigurationProperty("Opacity", DefaultValue = "1")]
+        public float Opacity
+        {
+            get
+            {
+                try
+                {
+                    return (float)this["Opacity"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("Opacity");
+                    this["Opacity"] = 1;
+                    return 1;
+                }
+            }
+            set => this["Opacity"] = value;
+        }
+
+        [ConfigurationProperty("UseCustomColour", DefaultValue = "false")]
+        public bool UseCustomColour
+        {
+            get
+            {
+                try
+                {
+                    return (bool)this["UseCustomColour"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("UseCustomColour");
+                    this["UseCustomColour"] = false;
+                    return false;
+                }
+            }
+            set => this["UseCustomColour"] = value;
+        }
+
+        [ConfigurationProperty("Colour", DefaultValue = "yellow")]
+        public Color Colour
+        {
+            get
+            {
+                try
+                {
+                    return (Color)this["Colour"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("Colour");
+                    this["Colour"] = Color.Yellow;
+                    return Color.Yellow;
+                }
+            }
+            set => this["Colour"] = value;
         }
     }
 
