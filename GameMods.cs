@@ -82,7 +82,7 @@ namespace GhostSelector
                     Write(addressFixLeaderboardPosition + offsetPosition, Program.Config.GhostSelectors.LeaderboardRank.Rank);
                     break;
                 case GhostSelector.FastestPlayer:
-                    //Write(addressSetLeaderboardRange, setLeaderboardRange);
+                    Write(addressSetLeaderboardRange, setLeaderboardRange);
                     Write(addressSelectFirstDownloadedEntry, selectFirstDownloadedEntry);
                     Write(addressSkipUGCRetry, skipUGCRetry);
                     Write(addressChangeLeaderboardDownload1, changeLeaderboardDownload1);
