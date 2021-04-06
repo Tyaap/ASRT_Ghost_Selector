@@ -24,25 +24,25 @@ namespace GhostSelector
 
         public static void UnknownValueMessage(string option)
         {
-            string message = "Found an unknown value for the following option while reading the config file: " + option;
+            string message = "Found an unknown value for the following option while reading the config file:\n" + option;
             Message(message);
         }
 
         public static void UnknownElementMessage(string option)
         {
-            string message = "Found an unknown element while reading the config file: " + option;
+            string message = "Found an unknown element while reading the config file:\n" + option;
             Message(message);
         }
 
         public static void UnknownAttributeMessage(string option)
         {
-            string message = "Found an unknown attribute while reading the config file: " + option;
+            string message = "Found an unknown attribute while reading the config file:\n" + option;
             Message(message);
         }
 
         public static void MissingPropertymessage(string option)
         {
-            string message = "Could not find a required property while reading the config file: " + option;
+            string message = "Could not find a required property while reading the config file:\n" + option;
             Message(message);
         }
     }
@@ -181,27 +181,15 @@ namespace GhostSelector
 
     public class ProgramConfigSection : ConfigurationSectionEx
     {
-        [ConfigurationProperty("PositionSelector")]
-        public PositionSelectorElement PositionSelector
+        [ConfigurationProperty("GhostSelectors")]
+        public GhostSelectorsElement GhostSelectors
         {
             get
             {
-                if (base["PositionSelector"] is PositionSelectorElement tmp)
+                if (base["GhostSelectors"] is GhostSelectorsElement tmp)
                     return tmp;
                 else
-                    return new PositionSelectorElement();
-            }
-        }
-
-        [ConfigurationProperty("FastestPlayerSelector")]
-        public FastestPlayerSelectorElement FastestPlayerSelector
-        {
-            get
-            {
-                if (base["FastestPlayerSelector"] is FastestPlayerSelectorElement tmp)
-                    return tmp;
-                else
-                    return new FastestPlayerSelectorElement();
+                    return new GhostSelectorsElement();
             }
         }
 
@@ -216,243 +204,101 @@ namespace GhostSelector
                     return new GraphicsElement();
             }
         }
-    }
 
-    public class GraphicsElement : ConfigurationElementEx
-    {
-        [ConfigurationProperty("Nametag")]
-        public NametagElement Nametag
+        [ConfigurationProperty("GhostSaver")]
+        public GhostSaverElement GhostSaver
         {
             get
             {
-                if (base["Nametag"] is NametagElement tmp)
+                if (base["GhostSaver"] is GhostSaverElement tmp)
                     return tmp;
                 else
-                    return new NametagElement();
+                    return new GhostSaverElement();
             }
         }
+    }
 
-        [ConfigurationProperty("PBGhost")]
-        public PBGhostElement PBGhost
+    public class GhostSelectorsElement : ConfigurationElementEx
+    {
+        [ConfigurationProperty("Choice", DefaultValue = "Default")]
+        public GhostSelector Choice
         {
             get
             {
-                if (base["PBGhost"] is PBGhostElement tmp)
+                try
+                {
+                    return (GhostSelector)this["Choice"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("Choice");
+                    this["Choice"] = true;
+                    return GhostSelector.Default;
+                }
+            }
+            set => this["Choice"] = value;
+        }
+
+        [ConfigurationProperty("LeaderboardRank")]
+        public LeaderboardRankElement LeaderboardRank
+        {
+            get
+            {
+                if (base["LeaderboardRank"] is LeaderboardRankElement tmp)
                     return tmp;
                 else
-                    return new PBGhostElement();
+                    return new LeaderboardRankElement();
             }
         }
 
-        [ConfigurationProperty("OnlineGhost")]
-        public OnlineGhostElement OnlineGhost
+        [ConfigurationProperty("FastestPlayer")]
+        [ConfigurationCollection(typeof(PlayerElement), AddItemName = "Player", CollectionType = ConfigurationElementCollectionType.BasicMap)]
+        public GenericConfigurationElementCollection<PlayerElement> FastestPlayer
         {
             get
             {
-                if (base["OnlineGhost"] is OnlineGhostElement tmp)
-                    return tmp;
-                else
-                    return new OnlineGhostElement();
-            }
-        }
-    }
-
-    public class NametagElement : ConfigurationElementEx
-    {
-        [ConfigurationProperty("Opacity", DefaultValue = "1")]
-        public float Opacity
-        {
-            get
-            {
-                try
-                {
-                    return (float)this["Opacity"];
-                }
-                catch
-                {
-                    ErrorMessage.UnknownValueMessage("Opacity");
-                    this["Opacity"] = 1;
-                    return 1;
-                }
-            }
-            set => this["Opacity"] = value;
-        }
-    }
-
-    public class PBGhostElement : ConfigurationElementEx
-    {
-        [ConfigurationProperty("Hide", DefaultValue = "false")]
-        public bool Hide
-        {
-            get
-            {
-                try
-                {
-                    return (bool)this["Hide"];
-                }
-                catch
-                {
-                    ErrorMessage.UnknownValueMessage("Hide");
-                    this["Hide"] = false;
-                    return false;
-                }
-            }
-            set => this["Hide"] = value;
-        }
-
-        [ConfigurationProperty("Opacity", DefaultValue = "1")]
-        public float Opacity
-        {
-            get
-            {
-                try
-                {
-                    return (float)this["Opacity"];
-                }
-                catch
-                {
-                    ErrorMessage.UnknownValueMessage("Opacity");
-                    this["Opacity"] = 1;
-                    return 1;
-                }
-            }
-            set => this["Opacity"] = value;
-        }
-
-        [ConfigurationProperty("UseCustomColour", DefaultValue = "false")]
-        public bool UseCustomColour
-        {
-            get
-            {
-                try
-                {
-                    return (bool)this["UseCustomColour"];
-                }
-                catch
-                {
-                    ErrorMessage.UnknownValueMessage("UseCustomColour");
-                    this["UseCustomColour"] = false;
-                    return false;
-                }
-            }
-            set => this["UseCustomColour"] = value;
-        }
-
-        [ConfigurationProperty("Colour", DefaultValue = "magenta")]
-        public Color Colour
-        {
-            get
-            {
-                try
-                {
-                    return (Color)this["Colour"];
-                }
-                catch
-                {
-                    ErrorMessage.UnknownValueMessage("Colour");
-                    this["Colour"] = Color.Magenta;
-                    return Color.Magenta;
-                }
-            }
-            set => this["Colour"] = value;
-        }
-    }
-
-    public class OnlineGhostElement : ConfigurationElementEx
-    {
-        [ConfigurationProperty("Opacity", DefaultValue = "1")]
-        public float Opacity
-        {
-            get
-            {
-                try
-                {
-                    return (float)this["Opacity"];
-                }
-                catch
-                {
-                    ErrorMessage.UnknownValueMessage("Opacity");
-                    this["Opacity"] = 1;
-                    return 1;
-                }
-            }
-            set => this["Opacity"] = value;
-        }
-
-        [ConfigurationProperty("UseCustomColour", DefaultValue = "false")]
-        public bool UseCustomColour
-        {
-            get
-            {
-                try
-                {
-                    return (bool)this["UseCustomColour"];
-                }
-                catch
-                {
-                    ErrorMessage.UnknownValueMessage("UseCustomColour");
-                    this["UseCustomColour"] = false;
-                    return false;
-                }
-            }
-            set => this["UseCustomColour"] = value;
-        }
-
-        [ConfigurationProperty("Colour", DefaultValue = "yellow")]
-        public Color Colour
-        {
-            get
-            {
-                try
-                {
-                    return (Color)this["Colour"];
-                }
-                catch
-                {
-                    ErrorMessage.UnknownValueMessage("Colour");
-                    this["Colour"] = Color.Yellow;
-                    return Color.Yellow;
-                }
-            }
-            set => this["Colour"] = value;
-        }
-    }
-
-    public class FastestPlayerSelectorElement : ConfigurationElementEx
-    {
-        [ConfigurationProperty("Enabled", DefaultValue = "True")]
-        public bool Enabled
-        {
-            get
-            {
-                try
-                {
-                    return (bool)this["Enabled"];
-                }
-                catch
-                {
-                    ErrorMessage.UnknownValueMessage("Enabled");
-                    this["Enabled"] = false;
-                    return false;
-                }
-            }
-            set => this["Enabled"] = value;
-        }
-
-        [ConfigurationProperty("Players")]
-        [ConfigurationCollection(typeof(PlayerElement), AddItemName = "Entry", CollectionType = ConfigurationElementCollectionType.BasicMap)]
-        public GenericConfigurationElementCollection<PlayerElement> Players
-        {
-            get
-            {
-                if (base["Players"] is GenericConfigurationElementCollection<PlayerElement> tmp)
+                if (base["FastestPlayer"] is GenericConfigurationElementCollection<PlayerElement> tmp)
                     return tmp;
                 else
                     return new GenericConfigurationElementCollection<PlayerElement>();
             }
         }
 
+        [ConfigurationProperty("FromFile")]
+        public FromFileElement FromFile
+        {
+            get
+            {
+                if (base["FromFile"] is FromFileElement tmp)
+                    return tmp;
+                else
+                    return new FromFileElement();
+            }
+        }
     }
+
+    public class LeaderboardRankElement : ConfigurationElementEx
+    {
+        [ConfigurationProperty("Rank", DefaultValue = "0")]
+        public uint Rank
+        {
+            get
+            {
+                try
+                {
+                    return (uint)this["Rank"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("Rank");
+                    this["Rank"] = 0;
+                    return 0;
+                }
+            }
+            set => this["Rank"] = value;
+        }
+    }
+
     public class PlayerElement : ConfigurationElementEx
     {
         [ConfigurationProperty("Name", DefaultValue = "")]
@@ -507,25 +353,225 @@ namespace GhostSelector
         }
     }
 
-    public class PositionSelectorElement : ConfigurationElementEx
+    public class FromFileElement : ConfigurationElementEx
     {
-        [ConfigurationProperty("SelectedPosition", DefaultValue = "0")]
-        public uint SelectedPosition
+        [ConfigurationProperty("NameTag", DefaultValue = "Ghost")]
+        public string NameTag
         {
             get
             {
                 try
                 {
-                    return (uint)this["SelectedPosition"];
+                    return (string)this["NameTag"];
                 }
                 catch
                 {
-                    ErrorMessage.UnknownValueMessage("SelectedPosition");
-                    this["SelectedPosition"] = 0;
-                    return 0;
+                    ErrorMessage.UnknownValueMessage("NameTag");
+                    this["NameTag"] = "Rival";
+                    return "Rival";
                 }
             }
-            set => this["SelectedPosition"] = value;
+            set => this["NameTag"] = value;
+        }
+
+        [ConfigurationProperty("File", DefaultValue = "")]
+        public string File
+        {
+            get
+            {
+                try
+                {
+                    return (string)this["File"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("File");
+                    this["File"] = "";
+                    return "";
+                }
+            }
+            set => this["File"] = value;
+        }
+    }
+
+    public class GraphicsElement : ConfigurationElementEx
+    {
+        [ConfigurationProperty("NameTag")]
+        public NameTagElement Nametag
+        {
+            get
+            {
+                if (base["NameTag"] is NameTagElement tmp)
+                    return tmp;
+                else
+                    return new NameTagElement();
+            }
+        }
+
+        [ConfigurationProperty("PBGhost")]
+        public GhostAppearanceElement PBGhost
+        {
+            get
+            {
+                if (base["PBGhost"] is GhostAppearanceElement tmp)
+                    return tmp;
+                else
+                    return new GhostAppearanceElement();
+            }
+        }
+
+        [ConfigurationProperty("RivalGhost")]
+        public GhostAppearanceElement RivalGhost
+        {
+            get
+            {
+                if (base["RivalGhost"] is GhostAppearanceElement tmp)
+                    return tmp;
+                else
+                    return new GhostAppearanceElement();
+            }
+        }
+    }
+
+    public class NameTagElement : ConfigurationElementEx
+    {
+        [ConfigurationProperty("Opacity", DefaultValue = "1")]
+        public float Opacity
+        {
+            get
+            {
+                try
+                {
+                    return (float)this["Opacity"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("Opacity");
+                    this["Opacity"] = 1;
+                    return 1;
+                }
+            }
+            set => this["Opacity"] = value;
+        }
+    }
+
+    public class GhostAppearanceElement : ConfigurationElementEx
+    {
+        [ConfigurationProperty("Hide", DefaultValue = "false")]
+        public bool Hide
+        {
+            get
+            {
+                try
+                {
+                    return (bool)this["Hide"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("Hide");
+                    this["Hide"] = false;
+                    return false;
+                }
+            }
+            set => this["Hide"] = value;
+        }
+
+        [ConfigurationProperty("Opacity", DefaultValue = "1")]
+        public float Opacity
+        {
+            get
+            {
+                try
+                {
+                    return (float)this["Opacity"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("Opacity");
+                    this["Opacity"] = 1;
+                    return 1;
+                }
+            }
+            set => this["Opacity"] = value;
+        }
+
+        [ConfigurationProperty("ChangeColour", DefaultValue = "false")]
+        public bool ChangeColour
+        {
+            get
+            {
+                try
+                {
+                    return (bool)this["ChangeColour"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("ChangeColour");
+                    this["ChangeColour"] = false;
+                    return false;
+                }
+            }
+            set => this["ChangeColour"] = value;
+        }
+
+        [ConfigurationProperty("Colour", DefaultValue = "magenta")]
+        public Color Colour
+        {
+            get
+            {
+                try
+                {
+                    return (Color)this["Colour"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("Colour");
+                    this["Colour"] = Color.Magenta;
+                    return Color.Magenta;
+                }
+            }
+            set => this["Colour"] = value;
+        }
+    }
+
+    public class GhostSaverElement : ConfigurationElementEx
+    {
+        [ConfigurationProperty("Enabled", DefaultValue = "false")]
+        public bool Enabled
+        {
+            get
+            {
+                try
+                {
+                    return (bool)this["Enabled"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("Enabed");
+                    this["Enabled"] = false;
+                    return false;
+                }
+            }
+            set => this["Enabled"] = value;
+        }
+
+        [ConfigurationProperty("Folder", DefaultValue = "")]
+        public string Folder
+        {
+            get
+            {
+                try
+                {
+                    return (string)this["Folder"];
+                }
+                catch
+                {
+                    ErrorMessage.UnknownValueMessage("Folder");
+                    this["Folder"] = "";
+                    return "";
+                }
+            }
+            set => this["Folder"] = value;
         }
     }
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using static MemoryHelper;
 
@@ -10,37 +12,40 @@ namespace GhostSelector
     static class GameMods
     {
         // New Code
-        static readonly byte[] fixLeaderboardPosition = new byte[] { 0x89, 0x93, 0xD4, 0x06, 0x00, 0x00, 0xC7, 0x83, 0xC8, 0x06, 0x00, 0x00 };
+        static readonly byte[] fixLeaderboardRank = new byte[] { 0x89, 0x93, 0xD4, 0x06, 0x00, 0x00, 0xC7, 0x83, 0xC8, 0x06, 0x00, 0x00 };
 
         static readonly byte[] setLeaderboardRange = new byte[] { 0xB2, 0x01, 0x90 };
         static readonly byte[] selectFirstDownloadedEntry = new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 };
         static readonly byte[] changeLeaderboardDownload1 = new byte[] { 0x8B, 0x52, 0x74, 0x6A, 0x01, 0xEB, 0xA9, 0x90, 0x90 };
         static readonly byte[] changeLeaderboardDownload2 = new byte[] { 0x68, 0x17, 0x2E, 0xAF, 0x00, 0xEB, 0x52 };
+        static readonly byte[] skipUGCRetry = new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 };
 
-        static readonly byte[] hideGhostCar = new byte[] { 0x90, 0x90, 0x90 };
-        static readonly byte[] hideNameTags = new byte[] { 0xEB };
         static readonly byte[] hidePBGhost = new byte[] { 0x00 };
 
-        // Old Code
-        static readonly byte[] fixLeaderboardPosition_disable = new byte[] { 0x8B, 0x44, 0x24, 0x18, 0x89, 0x93, 0xD4, 0x06, 0x00, 0x00, 0x89, 0x83, 0xC8, 0x06, 0x00, 0x00 };
-        static readonly byte[] hideGhostCar_disable = new byte[] { 0x89, 0x73, 0x0C };
-        static readonly byte[] hideNameTags_disable = new byte[] { 0x75 };
+        // Original Code
+        static readonly byte[] fixLeaderboardRank_disable = new byte[] { 0x8B, 0x44, 0x24, 0x18, 0x89, 0x93, 0xD4, 0x06, 0x00, 0x00, 0x89, 0x83, 0xC8, 0x06, 0x00, 0x00 };
+
+        static readonly byte[] setLeaderboardRange_disable = new byte[] { 0x8A, 0x55, 0x18 };
+        static readonly byte[] selectFirstDownloadedEntry_disable = new byte[] { 0x0F, 0x82, 0x05, 0xFF, 0xFF, 0xFF };
+        static readonly byte[] changeLeaderboardDownload1_disable = new byte[] { 0x8B, 0x52, 0x70, 0x6A, 0x00, 0x6A, 0x00, 0x6A, 0x01 };
+        static readonly byte[] changeLeaderboardDownload2_disable = new byte[] { 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC };
+        static readonly byte[] skipUGCRetry_disable = new byte[] { 0x0F, 0x84, 0xD0, 0x00, 0x00, 0x00 };
+
         static readonly byte[] hidePBGhost_disable = new byte[] { 0x01 };
 
         // Addresses
-        static readonly int addressFixLeaderboardPosition = 0x4EDC43;
-        static readonly int offsetPosition = 12;
+        const int addressFixLeaderboardPosition = 0x4EDC43;
+        const int offsetPosition = 12;
 
-        static readonly int offsetPlayerCount = 4;
-        static readonly int addressPlayerListStart = 0xAF2E17;
-        static readonly long steamId = 76561198024504670;
+        const int offsetPlayerCount = 4;
+        const int addressPlayerListStart = 0xAF2E17;
 
-        static readonly int addressSetLeaderboardRange = 0x4ED74E;
-        static readonly int addressChangeLeaderboardDownload1 = 0x4EDB65;
-        static readonly int addressChangeLeaderboardDownload2 = 0x4EDB15;
-        static readonly int addressSelectFirstDownloadedEntry = 0x4EDCF5;
+        const int addressSetLeaderboardRange = 0x4ED74E;
+        const int addressChangeLeaderboardDownload1 = 0x4EDB65;
+        const int addressChangeLeaderboardDownload2 = 0x4EDB15;
+        const int addressSelectFirstDownloadedEntry = 0x4EDCF5;
+        const int addressSkipUGCRetry = 0x875987;
 
-        static readonly int addressHideGhostCar = 0x8D2A0C;
         static readonly int addressHidePBGhost = 0x899D71;
 
         public static bool Initialise()
@@ -51,47 +56,69 @@ namespace GhostSelector
 
         public static void LoadSettings()
         {
-            Write(addressSetLeaderboardRange, setLeaderboardRange);
-            Write(addressChangeLeaderboardDownload1, changeLeaderboardDownload1);
-            Write(addressChangeLeaderboardDownload2, changeLeaderboardDownload2);
-            Write(addressSelectFirstDownloadedEntry, selectFirstDownloadedEntry);
+            // Reset ghost selector to default
+            Write(0x872EA9, (byte)0x74);
+            Write(addressSetLeaderboardRange, setLeaderboardRange_disable);
+            Write(addressSelectFirstDownloadedEntry, selectFirstDownloadedEntry_disable);
+            Write(addressChangeLeaderboardDownload1, changeLeaderboardDownload1_disable);
+            Write(addressChangeLeaderboardDownload2, changeLeaderboardDownload2_disable);
+            Write(addressSkipUGCRetry, skipUGCRetry_disable);
+            Write(addressFixLeaderboardPosition, fixLeaderboardRank_disable);
+            Write(0xC5308C, 0); // Clear any existing loaded ghost
+            Write(0x798C0E, (byte)0x74); // enable memory deallocation
 
-            if (Program.Config.FastestPlayerSelector.Enabled)
+            switch (Program.Config.GhostSelectors.Choice)
             {
-                // Disable fixed position
-                Write(addressFixLeaderboardPosition, fixLeaderboardPosition_disable);
-
-                // Load players into memory
-                int playerCount = 0;
-                foreach (PlayerElement Player in Program.Config.FastestPlayerSelector.Players)
-                {
-                    if (Player.Enabled)
+                case GhostSelector.Disabled:
+                    Write(0x872EA9, (byte)0xEB);
+                    break;
+                case GhostSelector.Default:
+                    break;
+                case GhostSelector.LeaderboardRank:
+                    Write(addressSetLeaderboardRange, setLeaderboardRange);
+                    Write(addressSelectFirstDownloadedEntry, selectFirstDownloadedEntry);
+                    Write(addressSkipUGCRetry, skipUGCRetry);
+                    Write(addressFixLeaderboardPosition, fixLeaderboardRank);
+                    Write(addressFixLeaderboardPosition + offsetPosition, Program.Config.GhostSelectors.LeaderboardRank.Rank);
+                    break;
+                case GhostSelector.FastestPlayer:
+                    //Write(addressSetLeaderboardRange, setLeaderboardRange);
+                    Write(addressSelectFirstDownloadedEntry, selectFirstDownloadedEntry);
+                    Write(addressSkipUGCRetry, skipUGCRetry);
+                    Write(addressChangeLeaderboardDownload1, changeLeaderboardDownload1);
+                    Write(addressChangeLeaderboardDownload2, changeLeaderboardDownload2);
+                    // Load players into memory
+                    int address = addressPlayerListStart - 8;
+                    foreach (PlayerElement Player in Program.Config.GhostSelectors.FastestPlayer)
                     {
-                        Write(addressPlayerListStart + playerCount * 8, Player.SteamId);
-                        playerCount++;
+                        if (Player.Enabled)
+                        {
+                            Write(address += 8, Player.SteamId);
+                        }
                     }
-                }
-                Write(addressChangeLeaderboardDownload1 + offsetPlayerCount, (byte)playerCount);
+                    Write(addressChangeLeaderboardDownload1 + offsetPlayerCount, (byte)Program.Config.GhostSelectors.FastestPlayer.Count);
+                    break;
+                case GhostSelector.FromFile:
+                    Write(0x872EA9, (byte)0xEB); // disable online ghost loading
+                    Write(0xC530B4, Program.Config.GhostSelectors.FromFile.NameTag);
+                    try
+                    {
+                        byte[] ghostData = File.ReadAllBytes(Program.Config.GhostSelectors.FromFile.File);
+                        int pGhostData = Allocate(0, ghostData.Length);
+                        Write(pGhostData, ghostData);
+                        Write(0xC5308C, pGhostData);
+                        Write(0x798C0E, (byte)0xEB); // prevent memory deallocation
+                    }
+                    catch
+                    {
+                        MessageBox.Show(
+                            "Could not load ghost data file!\n" +
+                            "Rival ghost will be disabled.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    break;
             }
 
-            else
-            {
-                // Disable player selector
-                Write(addressPlayerListStart, steamId);
-                Write(addressChangeLeaderboardDownload1 + offsetPlayerCount, (byte)0x01);
-
-                // Fix the position
-                Write(addressFixLeaderboardPosition, fixLeaderboardPosition);
-                if (Program.Config.PositionSelector.SelectedPosition > 0)
-                {
-                    Write(addressFixLeaderboardPosition + offsetPosition, Program.Config.PositionSelector.SelectedPosition);
-                }
-                else
-                {
-                    Write(addressFixLeaderboardPosition + offsetPosition, 0xFFFFFFF);
-                }
-            }
-
+            // Graphics
             if (Program.Config.Graphics.PBGhost.Hide)
             {
                 Write(addressHidePBGhost, hidePBGhost);
@@ -100,12 +127,29 @@ namespace GhostSelector
             {
                 Write(addressHidePBGhost, hidePBGhost_disable);
             }
-
             SetNameTagOpacity(Program.Config.Graphics.Nametag.Opacity);
             CustomGhostAppearance(
-                Program.Config.Graphics.PBGhost.UseCustomColour ? ToRGBA(Program.Config.Graphics.PBGhost.Colour) : 0,
-                Program.Config.Graphics.OnlineGhost.UseCustomColour ? ToRGBA(Program.Config.Graphics.OnlineGhost.Colour) : 0,
+                Program.Config.Graphics.PBGhost.ChangeColour ? ToRGBA(Program.Config.Graphics.PBGhost.Colour) : 0,
+                Program.Config.Graphics.RivalGhost.ChangeColour ? ToRGBA(Program.Config.Graphics.RivalGhost.Colour) : 0,
                 Program.Config.Graphics.PBGhost.Opacity);
+
+            // Ghost saver
+            if (Program.Config.GhostSaver.Enabled)
+            {
+                Write(0x89ABFD, new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 });
+                string filePath = Program.Config.GhostSaver.Folder + "\\%s_%s_%.3f.ghost";
+                byte[] filePathBytes = Encoding.UTF8.GetBytes(filePath + (char)0);
+                int pFilePath = Allocate(0, filePathBytes.Length);
+                Write(pFilePath, filePathBytes);
+                Write(0x89AC79, pFilePath);
+                Write(0x60C61C, new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90 } ); // don't append .// to start of file path
+                Write(0x60C629, (byte)0xEB); // (continued)
+                Write(0x89AC6C, (byte)0x0C); // use track file path names
+            }
+            else
+            {
+                Write(0x89ABFD, new byte[] { 0x0F, 0x84, 0x49, 0x01, 0x00, 0x00 });
+            }
         }
 
         public static void SetNameTagOpacity(float opacity)
@@ -293,8 +337,8 @@ namespace GhostSelector
             else
             {
                 Write(codeAddress + 0x47, (byte)0xEB); // code part 4: jne -> jmp
-                int defaultColour = GetDefaultGhostColour(pbPtr);
-                if (defaultColour > 0)
+                int defaultColour = GetDefaultGhostColour(onlinePtr);
+                if (defaultColour != 0)
                 {
                     SetGhostAppearance(onlinePtr, defaultColour, opacity);
                 }

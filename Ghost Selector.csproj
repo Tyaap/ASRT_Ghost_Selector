@@ -66,6 +66,7 @@
     <Compile Include="DialogBoxPlayer.Designer.cs">
       <DependentUpon>DialogBoxPlayer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Enums.cs" />
     <Compile Include="GameMods.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

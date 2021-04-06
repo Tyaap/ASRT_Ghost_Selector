@@ -9,6 +9,7 @@ namespace GhostSelector
         public static Configuration configFile;
         public static ProgramConfigSection Config;
 
+        [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();

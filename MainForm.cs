@@ -1,125 +1,89 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 
 namespace GhostSelector
 {
     public partial class MainForm : Form
     {
+        List<RadioButton> radiobuttons;
+        string lastFilePath = "";
+        string lastFolderPath = "";
+
         public MainForm()
         {
             InitializeComponent();
+
+            // radio button auto unchecking
+            radiobuttons = new List<RadioButton> { radioButtonDisable, radioButtonDefault, radioButtonLeaderboardRank, radioButtonFastestPlayer, radioButtonFromFile };
+            radiobuttons.ForEach(r => r.CheckedChanged += (o, e) =>
+            {
+                if (r.Checked) radiobuttons.ForEach(rb => rb.Checked = rb == r);
+            });
+
             LoadConfig();
         }
 
         public void LoadConfig()
         {
-            CheckBoxPositionSelector.Checked = !Program.Config.FastestPlayerSelector.Enabled;
-            NumericUpDownPosition.Value = Program.Config.PositionSelector.SelectedPosition;
-            CheckBoxFastestPlayerSelector.Checked = Program.Config.FastestPlayerSelector.Enabled;
+            radiobuttons[(int)Program.Config.GhostSelectors.Choice].Checked = true;
+
+            NumericUpDownPosition.Value = Program.Config.GhostSelectors.LeaderboardRank.Rank;
 
             ListViewPlayers.Items.Clear();
-            foreach (PlayerElement Player in Program.Config.FastestPlayerSelector.Players)
+            foreach (PlayerElement Player in Program.Config.GhostSelectors.FastestPlayer)
             {
                 ListViewPlayers.Items.Add(new ListViewItem(new string[] { Player.Name, Player.SteamId.ToString() }) { Checked = Player.Enabled });
             }
+     
+            textBoxNameTag.Text = Program.Config.GhostSelectors.FromFile.NameTag;
+            textBoxFile.Text = Program.Config.GhostSelectors.FromFile.File;
 
             TrackBarNameTagOpacity.Value = (int)(Program.Config.Graphics.Nametag.Opacity * 100);
             TrackBarGhostOpacity.Value = (int)(Program.Config.Graphics.PBGhost.Opacity * 100);
             CheckBoxHidePBGhost.Checked = Program.Config.Graphics.PBGhost.Hide;
-            CheckBoxPBGhostColour.Checked = Program.Config.Graphics.PBGhost.UseCustomColour;
+            CheckBoxPBGhostColour.Checked = Program.Config.Graphics.PBGhost.ChangeColour;
             ButtonPBGhostColour.BackColor = Program.Config.Graphics.PBGhost.Colour;
-            CheckBoxOnlineGhostColour.Checked = Program.Config.Graphics.OnlineGhost.UseCustomColour;
-            ButtonOnlineGhostColour.BackColor = Program.Config.Graphics.OnlineGhost.Colour;
+            CheckBoxOnlineGhostColour.Checked = Program.Config.Graphics.RivalGhost.ChangeColour;
+            ButtonOnlineGhostColour.BackColor = Program.Config.Graphics.RivalGhost.Colour;
+
+            checkBoxGhostSaverEnabled.Checked = Program.Config.GhostSaver.Enabled;
+            textBoxFolder.Text = Program.Config.GhostSaver.Folder;
         }
 
-        private void ButtonConfirm_Click(object sender, EventArgs e)
+        public void SaveConfig()
         {
-            Program.Config.FastestPlayerSelector.Enabled = CheckBoxFastestPlayerSelector.Checked;
-            Program.Config.PositionSelector.SelectedPosition = (uint)NumericUpDownPosition.Value;
+            Program.Config.GhostSelectors.Choice = (GhostSelector)radiobuttons.FindIndex(x => x.Checked);
 
-            Program.Config.FastestPlayerSelector.Players.Clear();
+            Program.Config.GhostSelectors.LeaderboardRank.Rank = (uint)NumericUpDownPosition.Value;
+
+            Program.Config.GhostSelectors.FastestPlayer.Clear();
             foreach (ListViewItem Player in ListViewPlayers.Items)
-                Program.Config.FastestPlayerSelector.Players.Add(new PlayerElement()
+            {
+                Program.Config.GhostSelectors.FastestPlayer.Add(new PlayerElement()
                 {
                     Enabled = Player.Checked,
                     Name = Player.SubItems[0].Text,
                     SteamId = ulong.Parse(Player.SubItems[1].Text)
                 });
+            }
+
+            Program.Config.GhostSelectors.FromFile.NameTag = textBoxNameTag.Text;
+            Program.Config.GhostSelectors.FromFile.File = textBoxFile.Text;
 
             Program.Config.Graphics.Nametag.Opacity = (float)TrackBarNameTagOpacity.Value / 100;
-            Program.Config.Graphics.PBGhost.Opacity = Program.Config.Graphics.OnlineGhost.Opacity = (float)TrackBarGhostOpacity.Value / 100;
+            Program.Config.Graphics.PBGhost.Opacity = Program.Config.Graphics.RivalGhost.Opacity = (float)TrackBarGhostOpacity.Value / 100;
             Program.Config.Graphics.PBGhost.Hide = CheckBoxHidePBGhost.Checked;
-            Program.Config.Graphics.PBGhost.UseCustomColour = CheckBoxPBGhostColour.Checked;
+            Program.Config.Graphics.PBGhost.ChangeColour = CheckBoxPBGhostColour.Checked;
             Program.Config.Graphics.PBGhost.Colour = ButtonPBGhostColour.BackColor;
-            Program.Config.Graphics.OnlineGhost.UseCustomColour = CheckBoxOnlineGhostColour.Checked;
-            Program.Config.Graphics.OnlineGhost.Colour = ButtonOnlineGhostColour.BackColor;
+            Program.Config.Graphics.RivalGhost.ChangeColour = CheckBoxOnlineGhostColour.Checked;
+            Program.Config.Graphics.RivalGhost.Colour = ButtonOnlineGhostColour.BackColor;
+
+            Program.Config.GhostSaver.Enabled = checkBoxGhostSaverEnabled.Checked;
+            Program.Config.GhostSaver.Folder = textBoxFolder.Text;
 
             Program.configFile.Save();
-
-            if (GameMods.Initialise())
-            {
-                GameMods.LoadSettings();
-                MessageBox.Show(
-                    "Your settings have been applied!" +
-                    "\nThey will be active until you close the game." +
-                    "\nReturn to the main menu to ensure the selected ghost is downloaded.",
-                    "Ghost Selector", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show(
-                    "Your settings have not been applied, but they were saved." +
-                    "\n\nTo apply your settings, you need to start the game first.",
-                    "Ghost Selector", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        private void ButtonRemove_Click(object sender, EventArgs e)
-        {
-            foreach (ListViewItem Item in ListViewPlayers.SelectedItems)
-                ListViewPlayers.Items.Remove(Item);
-        }
-
-        private void CheckBoxPositionSelector_Click(object sender, EventArgs e)
-        {
-            CheckBoxFastestPlayerSelector.Checked = !CheckBoxPositionSelector.Checked;
-        }
-
-        private void CheckBoxFastestPlayerSelector_Click(object sender, EventArgs e)
-        {
-            CheckBoxPositionSelector.Checked = !CheckBoxFastestPlayerSelector.Checked;
-        }
-
-        private void ButtonAdd_Click(object sender, EventArgs e)
-        {
-            using (DialogBoxPlayer DialogBox = new DialogBoxPlayer())
-            {
-                DialogBox.Text = "Add Player";
-                DialogBox.ButtonConfirm.Text = "Add";
-                DialogBox.TextBoxPlayerName.Select();
-
-                while (true)
-                {
-                    DialogResult Result = DialogBox.ShowDialog();
-
-                    try
-                    {
-                        if (Result == DialogResult.OK)
-                        {
-                            long.Parse(DialogBox.TextBoxPlayerSteamID.Text);
-                            ListViewPlayers.Items.Add(new ListViewItem(
-                                new string[] { DialogBox.TextBoxPlayerName.Text, DialogBox.TextBoxPlayerSteamID.Text })
-                            { Checked = DialogBox.CheckBoxPlayerEnabled.Checked });
-                        }
-
-                        break;
-                    }
-                    catch
-                    {
-                        MessageBox.Show("The Steam ID is invalid.", "Could not add player.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
         }
 
         private void ButtonEdit_Click(object sender, EventArgs e)
@@ -162,29 +126,91 @@ namespace GhostSelector
             }
         }
 
-        private void ButtonCancel_Click(object sender, EventArgs e)
+        private void ButtonAdd_Click(object sender, EventArgs e)
         {
-            LoadConfig();
-        }
-
-        private void ButtonPBGhostColour_Click(object sender, EventArgs e)
-        {
-            using (ColorDialog colorDialog = new ColorDialog() { Color = ButtonPBGhostColour.BackColor, FullOpen = true, })
+            using (DialogBoxPlayer DialogBox = new DialogBoxPlayer())
             {
-                if (colorDialog.ShowDialog() == DialogResult.OK)
+                DialogBox.Text = "Add Player";
+                DialogBox.ButtonConfirm.Text = "Add";
+                DialogBox.TextBoxPlayerName.Select();
+
+                while (true)
                 {
-                    ButtonPBGhostColour.BackColor = colorDialog.Color;
+                    DialogResult Result = DialogBox.ShowDialog();
+
+                    try
+                    {
+                        if (Result == DialogResult.OK)
+                        {
+                            long.Parse(DialogBox.TextBoxPlayerSteamID.Text);
+                            ListViewPlayers.Items.Add(new ListViewItem(
+                                new string[] { DialogBox.TextBoxPlayerName.Text, DialogBox.TextBoxPlayerSteamID.Text })
+                            { Checked = DialogBox.CheckBoxPlayerEnabled.Checked });
+                        }
+
+                        break;
+                    }
+                    catch
+                    {
+                        MessageBox.Show("The Steam ID is invalid.", "Could not add player.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
 
-        private void ButtonOnlineGhostColour_Click(object sender, EventArgs e)
+        private void ButtonRemove_Click(object sender, EventArgs e)
         {
-            using (ColorDialog colorDialog = new ColorDialog() { Color = ButtonOnlineGhostColour.BackColor, FullOpen = true, })
+            foreach (ListViewItem Item in ListViewPlayers.SelectedItems)
+                ListViewPlayers.Items.Remove(Item);
+        }
+
+        private void buttonBrowseFile_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog fileDialog = new OpenFileDialog() { Filter = "Ghost Files|*.ghost", Multiselect = false, Title = "Select a ghost data file", InitialDirectory = lastFilePath, CheckFileExists = true })
             {
-                if (colorDialog.ShowDialog() == DialogResult.OK)
+                if (fileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    ButtonOnlineGhostColour.BackColor = colorDialog.Color;
+                    textBoxFile.Text = fileDialog.FileName;
+                    lastFilePath = Path.GetDirectoryName(fileDialog.FileName);
+                }
+            }
+        }
+
+        private void ButtonSaveAndApply_Click(object sender, EventArgs e)
+        {
+            SaveConfig();
+
+            if (GameMods.Initialise())
+            {
+                GameMods.LoadSettings();
+                MessageBox.Show(
+                    "Your settings have been saved and applied!" +
+                    "\nThey will be active until you close the game." +
+                    "\nReturn to the main menu to ensure the new rival ghost is loaded",
+                    "Ghost Selector", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Your settings have been saved, but were not applied." +
+                    "\n\nTo apply your settings, you need to start the game first.",
+                    "Ghost Selector", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void ButtonUndoChanges_Click(object sender, EventArgs e)
+        {
+            LoadConfig();
+        }
+
+        private void buttonBrowseFolder_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog() { Description = "Choose an output folder", SelectedPath = lastFolderPath })
+            {
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    textBoxFolder.Text = folderDialog.SelectedPath;
+                    lastFolderPath = folderDialog.SelectedPath;
                 }
             }
         }
