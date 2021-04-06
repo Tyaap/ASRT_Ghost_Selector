@@ -235,7 +235,7 @@
             this.tabControl1.Padding = new System.Drawing.Point(0, 0);
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(410, 481);
-            this.tabControl1.TabIndex = 3;
+            this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
@@ -268,7 +268,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 85F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(396, 447);
-            this.tableLayoutPanel2.TabIndex = 2;
+            this.tableLayoutPanel2.TabIndex = 1;
             // 
             // radioButtonDisable
             // 
@@ -278,7 +278,7 @@
             this.radioButtonDisable.Name = "radioButtonDisable";
             this.radioButtonDisable.Padding = new System.Windows.Forms.Padding(11, 0, 0, 0);
             this.radioButtonDisable.Size = new System.Drawing.Size(390, 19);
-            this.radioButtonDisable.TabIndex = 8;
+            this.radioButtonDisable.TabIndex = 0;
             this.radioButtonDisable.Text = "No rival ghost (disable)";
             this.radioButtonDisable.UseVisualStyleBackColor = true;
             // 
@@ -323,7 +323,7 @@
             this.buttonBrowseFile.Location = new System.Drawing.Point(305, 35);
             this.buttonBrowseFile.Name = "buttonBrowseFile";
             this.buttonBrowseFile.Size = new System.Drawing.Size(82, 24);
-            this.buttonBrowseFile.TabIndex = 16;
+            this.buttonBrowseFile.TabIndex = 12;
             this.buttonBrowseFile.Text = "Browse";
             this.buttonBrowseFile.UseVisualStyleBackColor = true;
             this.buttonBrowseFile.Click += new System.EventHandler(this.buttonBrowseFile_Click);
@@ -347,7 +347,7 @@
             this.textBoxFile.Location = new System.Drawing.Point(89, 35);
             this.textBoxFile.Name = "textBoxFile";
             this.textBoxFile.Size = new System.Drawing.Size(210, 23);
-            this.textBoxFile.TabIndex = 15;
+            this.textBoxFile.TabIndex = 11;
             // 
             // label5
             // 
@@ -368,7 +368,7 @@
             this.textBoxNameTag.Location = new System.Drawing.Point(89, 4);
             this.textBoxNameTag.Name = "textBoxNameTag";
             this.textBoxNameTag.Size = new System.Drawing.Size(210, 23);
-            this.textBoxNameTag.TabIndex = 12;
+            this.textBoxNameTag.TabIndex = 10;
             // 
             // radioButtonFromFile
             // 
@@ -377,7 +377,7 @@
             this.radioButtonFromFile.Location = new System.Drawing.Point(11, -1);
             this.radioButtonFromFile.Name = "radioButtonFromFile";
             this.radioButtonFromFile.Size = new System.Drawing.Size(103, 19);
-            this.radioButtonFromFile.TabIndex = 7;
+            this.radioButtonFromFile.TabIndex = 0;
             this.radioButtonFromFile.Text = "Load from file";
             this.radioButtonFromFile.UseVisualStyleBackColor = false;
             // 
@@ -391,7 +391,7 @@
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(0);
             this.groupBox1.Size = new System.Drawing.Size(390, 54);
-            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             // 
             // tableLayoutPanel9
@@ -426,7 +426,7 @@
             0});
             this.NumericUpDownPosition.Name = "NumericUpDownPosition";
             this.NumericUpDownPosition.Size = new System.Drawing.Size(60, 23);
-            this.NumericUpDownPosition.TabIndex = 9;
+            this.NumericUpDownPosition.TabIndex = 5;
             this.NumericUpDownPosition.Value = new decimal(new int[] {
             1,
             0,
@@ -442,7 +442,7 @@
             this.LabelPosition.Name = "LabelPosition";
             this.LabelPosition.Padding = new System.Windows.Forms.Padding(3);
             this.LabelPosition.Size = new System.Drawing.Size(94, 21);
-            this.LabelPosition.TabIndex = 8;
+            this.LabelPosition.TabIndex = 4;
             this.LabelPosition.Text = "Choose a rank:";
             this.LabelPosition.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -453,7 +453,7 @@
             this.radioButtonLeaderboardRank.Location = new System.Drawing.Point(11, -1);
             this.radioButtonLeaderboardRank.Name = "radioButtonLeaderboardRank";
             this.radioButtonLeaderboardRank.Size = new System.Drawing.Size(167, 19);
-            this.radioButtonLeaderboardRank.TabIndex = 7;
+            this.radioButtonLeaderboardRank.TabIndex = 0;
             this.radioButtonLeaderboardRank.Text = "Specific leaderboard rank";
             this.radioButtonLeaderboardRank.UseVisualStyleBackColor = false;
             // 
@@ -476,7 +476,7 @@
             this.radioButtonFastestPlayer.Location = new System.Drawing.Point(11, -1);
             this.radioButtonFastestPlayer.Name = "radioButtonFastestPlayer";
             this.radioButtonFastestPlayer.Size = new System.Drawing.Size(133, 19);
-            this.radioButtonFastestPlayer.TabIndex = 6;
+            this.radioButtonFastestPlayer.TabIndex = 3;
             this.radioButtonFastestPlayer.Text = "Fastest player in list";
             this.radioButtonFastestPlayer.UseVisualStyleBackColor = false;
             // 
@@ -521,7 +521,7 @@
             this.ButtonAdd.Location = new System.Drawing.Point(128, 3);
             this.ButtonAdd.Name = "ButtonAdd";
             this.ButtonAdd.Size = new System.Drawing.Size(120, 28);
-            this.ButtonAdd.TabIndex = 7;
+            this.ButtonAdd.TabIndex = 8;
             this.ButtonAdd.Text = "Add";
             this.ButtonAdd.UseVisualStyleBackColor = true;
             this.ButtonAdd.Click += new System.EventHandler(this.ButtonAdd_Click);
@@ -533,7 +533,7 @@
             this.ButtonEdit.Location = new System.Drawing.Point(3, 3);
             this.ButtonEdit.Name = "ButtonEdit";
             this.ButtonEdit.Size = new System.Drawing.Size(119, 28);
-            this.ButtonEdit.TabIndex = 9;
+            this.ButtonEdit.TabIndex = 7;
             this.ButtonEdit.Text = "Edit";
             this.ButtonEdit.UseVisualStyleBackColor = true;
             this.ButtonEdit.Click += new System.EventHandler(this.ButtonEdit_Click);
@@ -545,7 +545,7 @@
             this.ButtonRemove.Location = new System.Drawing.Point(254, 3);
             this.ButtonRemove.Name = "ButtonRemove";
             this.ButtonRemove.Size = new System.Drawing.Size(121, 28);
-            this.ButtonRemove.TabIndex = 8;
+            this.ButtonRemove.TabIndex = 9;
             this.ButtonRemove.Text = "Remove";
             this.ButtonRemove.UseVisualStyleBackColor = true;
             this.ButtonRemove.Click += new System.EventHandler(this.ButtonRemove_Click);
@@ -586,7 +586,7 @@
             this.radioButtonDefault.Name = "radioButtonDefault";
             this.radioButtonDefault.Padding = new System.Windows.Forms.Padding(11, 0, 0, 0);
             this.radioButtonDefault.Size = new System.Drawing.Size(390, 19);
-            this.radioButtonDefault.TabIndex = 7;
+            this.radioButtonDefault.TabIndex = 0;
             this.radioButtonDefault.Text = "One place above your leaderboard rank (default)";
             this.radioButtonDefault.UseVisualStyleBackColor = true;
             // 
@@ -674,7 +674,7 @@
             this.buttonBrowseFolder.Location = new System.Drawing.Point(300, 33);
             this.buttonBrowseFolder.Name = "buttonBrowseFolder";
             this.buttonBrowseFolder.Size = new System.Drawing.Size(81, 24);
-            this.buttonBrowseFolder.TabIndex = 16;
+            this.buttonBrowseFolder.TabIndex = 9;
             this.buttonBrowseFolder.Text = "Browse";
             this.buttonBrowseFolder.UseVisualStyleBackColor = true;
             this.buttonBrowseFolder.Click += new System.EventHandler(this.buttonBrowseFolder_Click);
@@ -698,7 +698,7 @@
             this.textBoxFolder.Location = new System.Drawing.Point(76, 34);
             this.textBoxFolder.Name = "textBoxFolder";
             this.textBoxFolder.Size = new System.Drawing.Size(218, 23);
-            this.textBoxFolder.TabIndex = 15;
+            this.textBoxFolder.TabIndex = 8;
             // 
             // label7
             // 
@@ -721,7 +721,7 @@
             this.checkBoxGhostSaverEnabled.Location = new System.Drawing.Point(76, 3);
             this.checkBoxGhostSaverEnabled.Name = "checkBoxGhostSaverEnabled";
             this.checkBoxGhostSaverEnabled.Size = new System.Drawing.Size(15, 24);
-            this.checkBoxGhostSaverEnabled.TabIndex = 41;
+            this.checkBoxGhostSaverEnabled.TabIndex = 7;
             this.checkBoxGhostSaverEnabled.UseVisualStyleBackColor = true;
             // 
             // GroupBoxGraphics
@@ -771,7 +771,7 @@
             this.TrackBarNameTagOpacity.Maximum = 100;
             this.TrackBarNameTagOpacity.Name = "TrackBarNameTagOpacity";
             this.TrackBarNameTagOpacity.Size = new System.Drawing.Size(139, 33);
-            this.TrackBarNameTagOpacity.TabIndex = 13;
+            this.TrackBarNameTagOpacity.TabIndex = 0;
             this.TrackBarNameTagOpacity.TickFrequency = 10;
             // 
             // label2
@@ -798,7 +798,7 @@
             this.TrackBarGhostOpacity.Maximum = 100;
             this.TrackBarGhostOpacity.Name = "TrackBarGhostOpacity";
             this.TrackBarGhostOpacity.Size = new System.Drawing.Size(139, 38);
-            this.TrackBarGhostOpacity.TabIndex = 32;
+            this.TrackBarGhostOpacity.TabIndex = 1;
             this.TrackBarGhostOpacity.TickFrequency = 10;
             // 
             // label1
@@ -829,7 +829,7 @@
             this.ButtonPBGhostColour.Location = new System.Drawing.Point(331, 43);
             this.ButtonPBGhostColour.Name = "ButtonPBGhostColour";
             this.ButtonPBGhostColour.Size = new System.Drawing.Size(35, 23);
-            this.ButtonPBGhostColour.TabIndex = 37;
+            this.ButtonPBGhostColour.TabIndex = 4;
             this.ButtonPBGhostColour.UseVisualStyleBackColor = false;
             // 
             // ButtonOnlineGhostColour
@@ -838,7 +838,7 @@
             this.ButtonOnlineGhostColour.Location = new System.Drawing.Point(331, 73);
             this.ButtonOnlineGhostColour.Name = "ButtonOnlineGhostColour";
             this.ButtonOnlineGhostColour.Size = new System.Drawing.Size(35, 23);
-            this.ButtonOnlineGhostColour.TabIndex = 36;
+            this.ButtonOnlineGhostColour.TabIndex = 6;
             this.ButtonOnlineGhostColour.UseVisualStyleBackColor = false;
             // 
             // CheckBoxOnlineGhostColour
@@ -847,7 +847,7 @@
             this.CheckBoxOnlineGhostColour.Location = new System.Drawing.Point(151, 75);
             this.CheckBoxOnlineGhostColour.Name = "CheckBoxOnlineGhostColour";
             this.CheckBoxOnlineGhostColour.Size = new System.Drawing.Size(192, 19);
-            this.CheckBoxOnlineGhostColour.TabIndex = 35;
+            this.CheckBoxOnlineGhostColour.TabIndex = 5;
             this.CheckBoxOnlineGhostColour.Text = "Change rival ghost colour";
             this.CheckBoxOnlineGhostColour.UseVisualStyleBackColor = true;
             // 
@@ -857,7 +857,7 @@
             this.CheckBoxPBGhostColour.Location = new System.Drawing.Point(151, 47);
             this.CheckBoxPBGhostColour.Name = "CheckBoxPBGhostColour";
             this.CheckBoxPBGhostColour.Size = new System.Drawing.Size(161, 19);
-            this.CheckBoxPBGhostColour.TabIndex = 34;
+            this.CheckBoxPBGhostColour.TabIndex = 3;
             this.CheckBoxPBGhostColour.Text = "Change PB ghost colour";
             this.CheckBoxPBGhostColour.UseVisualStyleBackColor = true;
             // 
@@ -867,7 +867,7 @@
             this.CheckBoxHidePBGhost.Location = new System.Drawing.Point(151, 18);
             this.CheckBoxHidePBGhost.Name = "CheckBoxHidePBGhost";
             this.CheckBoxHidePBGhost.Size = new System.Drawing.Size(114, 19);
-            this.CheckBoxHidePBGhost.TabIndex = 0;
+            this.CheckBoxHidePBGhost.TabIndex = 2;
             this.CheckBoxHidePBGhost.Text = "Hide PB ghost";
             this.CheckBoxHidePBGhost.UseVisualStyleBackColor = true;
             // 
