@@ -21,6 +21,7 @@ namespace GhostSelector
         static readonly byte[] skipUGCRetry = new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 };
 
         static readonly byte[] hidePBGhost = new byte[] { 0x00 };
+        static readonly byte[] dontHideRival = new byte[] { 0x00 };
 
         // Original Code
         static readonly byte[] fixLeaderboardRank_disable = new byte[] { 0x8B, 0x44, 0x24, 0x18, 0x89, 0x93, 0xD4, 0x06, 0x00, 0x00, 0x89, 0x83, 0xC8, 0x06, 0x00, 0x00 };
@@ -32,6 +33,7 @@ namespace GhostSelector
         static readonly byte[] skipUGCRetry_disable = new byte[] { 0x0F, 0x84, 0xD0, 0x00, 0x00, 0x00 };
 
         static readonly byte[] hidePBGhost_disable = new byte[] { 0x01 };
+        static readonly byte[] dontHideRival_disable = new byte[] { 0x01 };
 
         // Addresses
         const int addressFixLeaderboardPosition = 0x4EDC43;
@@ -46,7 +48,8 @@ namespace GhostSelector
         const int addressSelectFirstDownloadedEntry = 0x4EDCF5;
         const int addressSkipUGCRetry = 0x875987;
 
-        static readonly int addressHidePBGhost = 0x899D71;
+        const int addressHidePBGhost = 0x899D71;
+        const int addressDontHideRival = 0x79B098;
 
         public static bool Initialise()
         {
@@ -127,11 +130,19 @@ namespace GhostSelector
             {
                 Write(addressHidePBGhost, hidePBGhost_disable);
             }
+            if (Program.Config.Graphics.RivalGhost.Hide)
+            {
+                Write(addressDontHideRival, dontHideRival_disable);
+            }
+            else
+            {
+                Write(addressDontHideRival, dontHideRival);
+            }
             SetNameTagOpacity(Program.Config.Graphics.Nametag.Opacity);
             CustomGhostAppearance(
                 Program.Config.Graphics.PBGhost.ChangeColour ? ToRGBA(Program.Config.Graphics.PBGhost.Colour) : 0,
                 Program.Config.Graphics.RivalGhost.ChangeColour ? ToRGBA(Program.Config.Graphics.RivalGhost.Colour) : 0,
-                Program.Config.Graphics.PBGhost.Opacity);
+                1);
 
             // Ghost saver
             if (Program.Config.GhostSaver.Enabled)

@@ -16,7 +16,7 @@ namespace GhostSelector
             InitializeComponent();
 
             // radio button auto unchecking
-            radiobuttons = new List<RadioButton> { radioButtonDisable, radioButtonDefault, radioButtonLeaderboardRank, radioButtonFastestPlayer, radioButtonFromFile };
+            radiobuttons = new List<RadioButton> { RadioButtonDisable, RadioButtonDefault, RadioButtonLeaderboardRank, RadioButtonFastestPlayer, RadioButtonFromFile };
             radiobuttons.ForEach(r => r.CheckedChanged += (o, e) =>
             {
                 if (r.Checked) radiobuttons.ForEach(rb => rb.Checked = rb == r);
@@ -37,19 +37,19 @@ namespace GhostSelector
                 ListViewPlayers.Items.Add(new ListViewItem(new string[] { Player.Name, Player.SteamId.ToString() }) { Checked = Player.Enabled });
             }
      
-            textBoxNameTag.Text = Program.Config.GhostSelectors.FromFile.NameTag;
-            textBoxFile.Text = Program.Config.GhostSelectors.FromFile.File;
+            TextBoxNameTag.Text = Program.Config.GhostSelectors.FromFile.NameTag;
+            TextBoxFile.Text = Program.Config.GhostSelectors.FromFile.File;
 
             TrackBarNameTagOpacity.Value = (int)(Program.Config.Graphics.Nametag.Opacity * 100);
-            TrackBarGhostOpacity.Value = (int)(Program.Config.Graphics.PBGhost.Opacity * 100);
             CheckBoxHidePBGhost.Checked = Program.Config.Graphics.PBGhost.Hide;
             CheckBoxPBGhostColour.Checked = Program.Config.Graphics.PBGhost.ChangeColour;
             ButtonPBGhostColour.BackColor = Program.Config.Graphics.PBGhost.Colour;
-            CheckBoxOnlineGhostColour.Checked = Program.Config.Graphics.RivalGhost.ChangeColour;
-            ButtonOnlineGhostColour.BackColor = Program.Config.Graphics.RivalGhost.Colour;
+            CheckBoxDontHideRivalGhost.Checked = !Program.Config.Graphics.RivalGhost.Hide;
+            CheckBoxRivalGhostColour.Checked = Program.Config.Graphics.RivalGhost.ChangeColour;
+            ButtonRivalGhostColour.BackColor = Program.Config.Graphics.RivalGhost.Colour;
 
-            checkBoxGhostSaverEnabled.Checked = Program.Config.GhostSaver.Enabled;
-            textBoxFolder.Text = Program.Config.GhostSaver.Folder;
+            CheckBoxGhostSaverEnabled.Checked = Program.Config.GhostSaver.Enabled;
+            TextBoxFolder.Text = Program.Config.GhostSaver.Folder;
         }
 
         public void SaveConfig()
@@ -69,19 +69,19 @@ namespace GhostSelector
                 });
             }
 
-            Program.Config.GhostSelectors.FromFile.NameTag = textBoxNameTag.Text;
-            Program.Config.GhostSelectors.FromFile.File = textBoxFile.Text;
+            Program.Config.GhostSelectors.FromFile.NameTag = TextBoxNameTag.Text;
+            Program.Config.GhostSelectors.FromFile.File = TextBoxFile.Text;
 
             Program.Config.Graphics.Nametag.Opacity = (float)TrackBarNameTagOpacity.Value / 100;
-            Program.Config.Graphics.PBGhost.Opacity = Program.Config.Graphics.RivalGhost.Opacity = (float)TrackBarGhostOpacity.Value / 100;
             Program.Config.Graphics.PBGhost.Hide = CheckBoxHidePBGhost.Checked;
             Program.Config.Graphics.PBGhost.ChangeColour = CheckBoxPBGhostColour.Checked;
             Program.Config.Graphics.PBGhost.Colour = ButtonPBGhostColour.BackColor;
-            Program.Config.Graphics.RivalGhost.ChangeColour = CheckBoxOnlineGhostColour.Checked;
-            Program.Config.Graphics.RivalGhost.Colour = ButtonOnlineGhostColour.BackColor;
+            Program.Config.Graphics.RivalGhost.Hide = !CheckBoxDontHideRivalGhost.Checked;
+            Program.Config.Graphics.RivalGhost.ChangeColour = CheckBoxRivalGhostColour.Checked;
+            Program.Config.Graphics.RivalGhost.Colour = ButtonRivalGhostColour.BackColor;
 
-            Program.Config.GhostSaver.Enabled = checkBoxGhostSaverEnabled.Checked;
-            Program.Config.GhostSaver.Folder = textBoxFolder.Text;
+            Program.Config.GhostSaver.Enabled = CheckBoxGhostSaverEnabled.Checked;
+            Program.Config.GhostSaver.Folder = TextBoxFolder.Text;
 
             Program.configFile.Save();
         }
@@ -164,13 +164,13 @@ namespace GhostSelector
                 ListViewPlayers.Items.Remove(Item);
         }
 
-        private void buttonBrowseFile_Click(object sender, EventArgs e)
+        private void ButtonBrowseFile_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog fileDialog = new OpenFileDialog() { Filter = "Ghost Files|*.ghost", Multiselect = false, Title = "Select a ghost data file", InitialDirectory = lastFilePath, CheckFileExists = true })
             {
                 if (fileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    textBoxFile.Text = fileDialog.FileName;
+                    TextBoxFile.Text = fileDialog.FileName;
                     lastFilePath = Path.GetDirectoryName(fileDialog.FileName);
                 }
             }
@@ -203,14 +203,36 @@ namespace GhostSelector
             LoadConfig();
         }
 
-        private void buttonBrowseFolder_Click(object sender, EventArgs e)
+        private void ButtonBrowseFolder_Click(object sender, EventArgs e)
         {
             using (FolderBrowserDialog folderDialog = new FolderBrowserDialog() { Description = "Choose an output folder", SelectedPath = lastFolderPath })
             {
                 if (folderDialog.ShowDialog() == DialogResult.OK)
                 {
-                    textBoxFolder.Text = folderDialog.SelectedPath;
+                    TextBoxFolder.Text = folderDialog.SelectedPath;
                     lastFolderPath = folderDialog.SelectedPath;
+                }
+            }
+        }
+
+        private void ButtonPBGhostColour_Click(object sender, EventArgs e)
+        {
+            using (ColorDialog colorDialog = new ColorDialog() { Color = ButtonPBGhostColour.BackColor, FullOpen = true, })
+            {
+                if (colorDialog.ShowDialog() == DialogResult.OK)
+                {
+                    ButtonPBGhostColour.BackColor = colorDialog.Color;
+                }
+            }
+        }
+
+        private void ButtonRivalGhostColour_Click(object sender, EventArgs e)
+        {
+            using (ColorDialog colorDialog = new ColorDialog() { Color = ButtonRivalGhostColour.BackColor, FullOpen = true, })
+            {
+                if (colorDialog.ShowDialog() == DialogResult.OK)
+                {
+                    ButtonRivalGhostColour.BackColor = colorDialog.Color;
                 }
             }
         }

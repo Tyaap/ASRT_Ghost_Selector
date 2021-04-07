@@ -476,25 +476,6 @@ namespace GhostSelector
             set => this["Hide"] = value;
         }
 
-        [ConfigurationProperty("Opacity", DefaultValue = "1")]
-        public float Opacity
-        {
-            get
-            {
-                try
-                {
-                    return (float)this["Opacity"];
-                }
-                catch
-                {
-                    ErrorMessage.UnknownValueMessage("Opacity");
-                    this["Opacity"] = 1;
-                    return 1;
-                }
-            }
-            set => this["Opacity"] = value;
-        }
-
         [ConfigurationProperty("ChangeColour", DefaultValue = "false")]
         public bool ChangeColour
         {

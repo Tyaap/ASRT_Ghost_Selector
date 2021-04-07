@@ -45,22 +45,22 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.radioButtonDisable = new System.Windows.Forms.RadioButton();
+            this.RadioButtonDisable = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonBrowseFile = new System.Windows.Forms.Button();
+            this.ButtonBrowseFile = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBoxFile = new System.Windows.Forms.TextBox();
+            this.TextBoxFile = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBoxNameTag = new System.Windows.Forms.TextBox();
-            this.radioButtonFromFile = new System.Windows.Forms.RadioButton();
+            this.TextBoxNameTag = new System.Windows.Forms.TextBox();
+            this.RadioButtonFromFile = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.NumericUpDownPosition = new System.Windows.Forms.NumericUpDown();
             this.LabelPosition = new System.Windows.Forms.Label();
-            this.radioButtonLeaderboardRank = new System.Windows.Forms.RadioButton();
+            this.RadioButtonLeaderboardRank = new System.Windows.Forms.RadioButton();
             this.FastestPlayerSelector = new System.Windows.Forms.GroupBox();
-            this.radioButtonFastestPlayer = new System.Windows.Forms.RadioButton();
+            this.RadioButtonFastestPlayer = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.ButtonAdd = new System.Windows.Forms.Button();
@@ -69,29 +69,28 @@
             this.ListViewPlayers = new System.Windows.Forms.ListView();
             this.NameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SteamIdColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.radioButtonDefault = new System.Windows.Forms.RadioButton();
+            this.RadioButtonDefault = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
-            this.buttonBrowseFolder = new System.Windows.Forms.Button();
+            this.ButtonBrowseFolder = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBoxFolder = new System.Windows.Forms.TextBox();
+            this.TextBoxFolder = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.checkBoxGhostSaverEnabled = new System.Windows.Forms.CheckBox();
+            this.CheckBoxGhostSaverEnabled = new System.Windows.Forms.CheckBox();
             this.GroupBoxGraphics = new System.Windows.Forms.GroupBox();
+            this.CheckBoxDontHideRivalGhost = new System.Windows.Forms.CheckBox();
+            this.CheckBoxHidePBGhost = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.TrackBarNameTagOpacity = new System.Windows.Forms.TrackBar();
-            this.label2 = new System.Windows.Forms.Label();
-            this.TrackBarGhostOpacity = new System.Windows.Forms.TrackBar();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.ButtonPBGhostColour = new System.Windows.Forms.Button();
-            this.ButtonOnlineGhostColour = new System.Windows.Forms.Button();
-            this.CheckBoxOnlineGhostColour = new System.Windows.Forms.CheckBox();
+            this.ButtonRivalGhostColour = new System.Windows.Forms.Button();
+            this.CheckBoxRivalGhostColour = new System.Windows.Forms.CheckBox();
             this.CheckBoxPBGhostColour = new System.Windows.Forms.CheckBox();
-            this.CheckBoxHidePBGhost = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.GroupBox.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -113,7 +112,6 @@
             this.GroupBoxGraphics.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarNameTagOpacity)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TrackBarGhostOpacity)).BeginInit();
             this.SuspendLayout();
             // 
             // columnHeader3
@@ -252,11 +250,11 @@
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.radioButtonDisable, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.RadioButtonDisable, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.groupBox2, 0, 4);
             this.tableLayoutPanel2.Controls.Add(this.groupBox1, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.FastestPlayerSelector, 0, 3);
-            this.tableLayoutPanel2.Controls.Add(this.radioButtonDefault, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.RadioButtonDefault, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -270,22 +268,22 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(396, 447);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
-            // radioButtonDisable
+            // RadioButtonDisable
             // 
-            this.radioButtonDisable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonDisable.AutoSize = true;
-            this.radioButtonDisable.Location = new System.Drawing.Point(3, 5);
-            this.radioButtonDisable.Name = "radioButtonDisable";
-            this.radioButtonDisable.Padding = new System.Windows.Forms.Padding(11, 0, 0, 0);
-            this.radioButtonDisable.Size = new System.Drawing.Size(390, 19);
-            this.radioButtonDisable.TabIndex = 0;
-            this.radioButtonDisable.Text = "No rival ghost (disable)";
-            this.radioButtonDisable.UseVisualStyleBackColor = true;
+            this.RadioButtonDisable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.RadioButtonDisable.AutoSize = true;
+            this.RadioButtonDisable.Location = new System.Drawing.Point(3, 5);
+            this.RadioButtonDisable.Name = "RadioButtonDisable";
+            this.RadioButtonDisable.Padding = new System.Windows.Forms.Padding(11, 0, 0, 0);
+            this.RadioButtonDisable.Size = new System.Drawing.Size(390, 19);
+            this.RadioButtonDisable.TabIndex = 0;
+            this.RadioButtonDisable.Text = "No rival ghost (disable)";
+            this.RadioButtonDisable.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.tableLayoutPanel3);
-            this.groupBox2.Controls.Add(this.radioButtonFromFile);
+            this.groupBox2.Controls.Add(this.RadioButtonFromFile);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.groupBox2.Location = new System.Drawing.Point(3, 365);
@@ -301,11 +299,11 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.01591F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55.43766F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.34043F));
-            this.tableLayoutPanel3.Controls.Add(this.buttonBrowseFile, 2, 1);
+            this.tableLayoutPanel3.Controls.Add(this.ButtonBrowseFile, 2, 1);
             this.tableLayoutPanel3.Controls.Add(this.label4, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.textBoxFile, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.TextBoxFile, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.label5, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.textBoxNameTag, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.TextBoxNameTag, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 16);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -316,17 +314,17 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(390, 63);
             this.tableLayoutPanel3.TabIndex = 12;
             // 
-            // buttonBrowseFile
+            // ButtonBrowseFile
             // 
-            this.buttonBrowseFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonBrowseFile.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.buttonBrowseFile.Location = new System.Drawing.Point(305, 35);
-            this.buttonBrowseFile.Name = "buttonBrowseFile";
-            this.buttonBrowseFile.Size = new System.Drawing.Size(82, 24);
-            this.buttonBrowseFile.TabIndex = 12;
-            this.buttonBrowseFile.Text = "Browse";
-            this.buttonBrowseFile.UseVisualStyleBackColor = true;
-            this.buttonBrowseFile.Click += new System.EventHandler(this.buttonBrowseFile_Click);
+            this.ButtonBrowseFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.ButtonBrowseFile.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.ButtonBrowseFile.Location = new System.Drawing.Point(305, 35);
+            this.ButtonBrowseFile.Name = "ButtonBrowseFile";
+            this.ButtonBrowseFile.Size = new System.Drawing.Size(82, 24);
+            this.ButtonBrowseFile.TabIndex = 12;
+            this.ButtonBrowseFile.Text = "Browse";
+            this.ButtonBrowseFile.UseVisualStyleBackColor = true;
+            this.ButtonBrowseFile.Click += new System.EventHandler(this.ButtonBrowseFile_Click);
             // 
             // label4
             // 
@@ -341,13 +339,13 @@
             this.label4.Text = "Name tag:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // textBoxFile
+            // TextBoxFile
             // 
-            this.textBoxFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxFile.Location = new System.Drawing.Point(89, 35);
-            this.textBoxFile.Name = "textBoxFile";
-            this.textBoxFile.Size = new System.Drawing.Size(210, 23);
-            this.textBoxFile.TabIndex = 11;
+            this.TextBoxFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TextBoxFile.Location = new System.Drawing.Point(89, 35);
+            this.TextBoxFile.Name = "TextBoxFile";
+            this.TextBoxFile.Size = new System.Drawing.Size(210, 23);
+            this.TextBoxFile.TabIndex = 11;
             // 
             // label5
             // 
@@ -362,29 +360,29 @@
             this.label5.Text = "File:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // textBoxNameTag
+            // TextBoxNameTag
             // 
-            this.textBoxNameTag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxNameTag.Location = new System.Drawing.Point(89, 4);
-            this.textBoxNameTag.Name = "textBoxNameTag";
-            this.textBoxNameTag.Size = new System.Drawing.Size(210, 23);
-            this.textBoxNameTag.TabIndex = 10;
+            this.TextBoxNameTag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TextBoxNameTag.Location = new System.Drawing.Point(89, 4);
+            this.TextBoxNameTag.Name = "TextBoxNameTag";
+            this.TextBoxNameTag.Size = new System.Drawing.Size(210, 23);
+            this.TextBoxNameTag.TabIndex = 10;
             // 
-            // radioButtonFromFile
+            // RadioButtonFromFile
             // 
-            this.radioButtonFromFile.AutoSize = true;
-            this.radioButtonFromFile.BackColor = System.Drawing.SystemColors.Window;
-            this.radioButtonFromFile.Location = new System.Drawing.Point(11, -1);
-            this.radioButtonFromFile.Name = "radioButtonFromFile";
-            this.radioButtonFromFile.Size = new System.Drawing.Size(103, 19);
-            this.radioButtonFromFile.TabIndex = 0;
-            this.radioButtonFromFile.Text = "Load from file";
-            this.radioButtonFromFile.UseVisualStyleBackColor = false;
+            this.RadioButtonFromFile.AutoSize = true;
+            this.RadioButtonFromFile.BackColor = System.Drawing.SystemColors.Window;
+            this.RadioButtonFromFile.Location = new System.Drawing.Point(11, -1);
+            this.RadioButtonFromFile.Name = "RadioButtonFromFile";
+            this.RadioButtonFromFile.Size = new System.Drawing.Size(103, 19);
+            this.RadioButtonFromFile.TabIndex = 0;
+            this.RadioButtonFromFile.Text = "Load from file";
+            this.RadioButtonFromFile.UseVisualStyleBackColor = false;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.tableLayoutPanel9);
-            this.groupBox1.Controls.Add(this.radioButtonLeaderboardRank);
+            this.groupBox1.Controls.Add(this.RadioButtonLeaderboardRank);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.groupBox1.Location = new System.Drawing.Point(3, 63);
@@ -446,20 +444,20 @@
             this.LabelPosition.Text = "Choose a rank:";
             this.LabelPosition.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // radioButtonLeaderboardRank
+            // RadioButtonLeaderboardRank
             // 
-            this.radioButtonLeaderboardRank.AutoSize = true;
-            this.radioButtonLeaderboardRank.BackColor = System.Drawing.SystemColors.Window;
-            this.radioButtonLeaderboardRank.Location = new System.Drawing.Point(11, -1);
-            this.radioButtonLeaderboardRank.Name = "radioButtonLeaderboardRank";
-            this.radioButtonLeaderboardRank.Size = new System.Drawing.Size(167, 19);
-            this.radioButtonLeaderboardRank.TabIndex = 0;
-            this.radioButtonLeaderboardRank.Text = "Specific leaderboard rank";
-            this.radioButtonLeaderboardRank.UseVisualStyleBackColor = false;
+            this.RadioButtonLeaderboardRank.AutoSize = true;
+            this.RadioButtonLeaderboardRank.BackColor = System.Drawing.SystemColors.Window;
+            this.RadioButtonLeaderboardRank.Location = new System.Drawing.Point(11, -1);
+            this.RadioButtonLeaderboardRank.Name = "RadioButtonLeaderboardRank";
+            this.RadioButtonLeaderboardRank.Size = new System.Drawing.Size(167, 19);
+            this.RadioButtonLeaderboardRank.TabIndex = 0;
+            this.RadioButtonLeaderboardRank.Text = "Specific leaderboard rank";
+            this.RadioButtonLeaderboardRank.UseVisualStyleBackColor = false;
             // 
             // FastestPlayerSelector
             // 
-            this.FastestPlayerSelector.Controls.Add(this.radioButtonFastestPlayer);
+            this.FastestPlayerSelector.Controls.Add(this.RadioButtonFastestPlayer);
             this.FastestPlayerSelector.Controls.Add(this.tableLayoutPanel4);
             this.FastestPlayerSelector.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FastestPlayerSelector.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
@@ -469,16 +467,16 @@
             this.FastestPlayerSelector.TabIndex = 4;
             this.FastestPlayerSelector.TabStop = false;
             // 
-            // radioButtonFastestPlayer
+            // RadioButtonFastestPlayer
             // 
-            this.radioButtonFastestPlayer.AutoSize = true;
-            this.radioButtonFastestPlayer.BackColor = System.Drawing.SystemColors.Window;
-            this.radioButtonFastestPlayer.Location = new System.Drawing.Point(11, -1);
-            this.radioButtonFastestPlayer.Name = "radioButtonFastestPlayer";
-            this.radioButtonFastestPlayer.Size = new System.Drawing.Size(133, 19);
-            this.radioButtonFastestPlayer.TabIndex = 3;
-            this.radioButtonFastestPlayer.Text = "Fastest player in list";
-            this.radioButtonFastestPlayer.UseVisualStyleBackColor = false;
+            this.RadioButtonFastestPlayer.AutoSize = true;
+            this.RadioButtonFastestPlayer.BackColor = System.Drawing.SystemColors.Window;
+            this.RadioButtonFastestPlayer.Location = new System.Drawing.Point(11, -1);
+            this.RadioButtonFastestPlayer.Name = "RadioButtonFastestPlayer";
+            this.RadioButtonFastestPlayer.Size = new System.Drawing.Size(133, 19);
+            this.RadioButtonFastestPlayer.TabIndex = 3;
+            this.RadioButtonFastestPlayer.Text = "Fastest player in list";
+            this.RadioButtonFastestPlayer.UseVisualStyleBackColor = false;
             // 
             // tableLayoutPanel4
             // 
@@ -578,17 +576,17 @@
             this.SteamIdColumn.Text = "Steam ID";
             this.SteamIdColumn.Width = 153;
             // 
-            // radioButtonDefault
+            // RadioButtonDefault
             // 
-            this.radioButtonDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonDefault.AutoSize = true;
-            this.radioButtonDefault.Location = new System.Drawing.Point(3, 35);
-            this.radioButtonDefault.Name = "radioButtonDefault";
-            this.radioButtonDefault.Padding = new System.Windows.Forms.Padding(11, 0, 0, 0);
-            this.radioButtonDefault.Size = new System.Drawing.Size(390, 19);
-            this.radioButtonDefault.TabIndex = 0;
-            this.radioButtonDefault.Text = "One place above your leaderboard rank (default)";
-            this.radioButtonDefault.UseVisualStyleBackColor = true;
+            this.RadioButtonDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.RadioButtonDefault.AutoSize = true;
+            this.RadioButtonDefault.Location = new System.Drawing.Point(3, 35);
+            this.RadioButtonDefault.Name = "RadioButtonDefault";
+            this.RadioButtonDefault.Padding = new System.Windows.Forms.Padding(11, 0, 0, 0);
+            this.RadioButtonDefault.Size = new System.Drawing.Size(390, 19);
+            this.RadioButtonDefault.TabIndex = 0;
+            this.RadioButtonDefault.Text = "One place above your leaderboard rank (default)";
+            this.RadioButtonDefault.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
@@ -611,9 +609,9 @@
             this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 3;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 135F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.39743F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.60257F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 144F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.49505F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 49.50495F));
             this.tableLayoutPanel8.Size = new System.Drawing.Size(396, 447);
             this.tableLayoutPanel8.TabIndex = 0;
             // 
@@ -622,9 +620,9 @@
             this.groupBox3.Controls.Add(this.tableLayoutPanel10);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.groupBox3.Location = new System.Drawing.Point(3, 138);
+            this.groupBox3.Location = new System.Drawing.Point(3, 147);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(390, 144);
+            this.groupBox3.Size = new System.Drawing.Size(390, 146);
             this.groupBox3.TabIndex = 12;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Ghost Saver";
@@ -636,11 +634,11 @@
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.22102F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.34043F));
             this.tableLayoutPanel10.Controls.Add(this.label8, 0, 2);
-            this.tableLayoutPanel10.Controls.Add(this.buttonBrowseFolder, 2, 1);
+            this.tableLayoutPanel10.Controls.Add(this.ButtonBrowseFolder, 2, 1);
             this.tableLayoutPanel10.Controls.Add(this.label6, 0, 0);
-            this.tableLayoutPanel10.Controls.Add(this.textBoxFolder, 1, 1);
+            this.tableLayoutPanel10.Controls.Add(this.TextBoxFolder, 1, 1);
             this.tableLayoutPanel10.Controls.Add(this.label7, 0, 1);
-            this.tableLayoutPanel10.Controls.Add(this.checkBoxGhostSaverEnabled, 1, 0);
+            this.tableLayoutPanel10.Controls.Add(this.CheckBoxGhostSaverEnabled, 1, 0);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel10.Location = new System.Drawing.Point(3, 19);
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
@@ -649,7 +647,7 @@
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(384, 122);
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(384, 124);
             this.tableLayoutPanel10.TabIndex = 39;
             // 
             // label8
@@ -657,7 +655,7 @@
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
             this.tableLayoutPanel10.SetColumnSpan(this.label8, 3);
-            this.label8.Location = new System.Drawing.Point(0, 69);
+            this.label8.Location = new System.Drawing.Point(0, 70);
             this.label8.Margin = new System.Windows.Forms.Padding(0);
             this.label8.Name = "label8";
             this.label8.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
@@ -667,17 +665,17 @@
     "older chosen above. Each lap can be identified by the track, character used, and" +
     " lap time given in the file name.";
             // 
-            // buttonBrowseFolder
+            // ButtonBrowseFolder
             // 
-            this.buttonBrowseFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonBrowseFolder.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.buttonBrowseFolder.Location = new System.Drawing.Point(300, 33);
-            this.buttonBrowseFolder.Name = "buttonBrowseFolder";
-            this.buttonBrowseFolder.Size = new System.Drawing.Size(81, 24);
-            this.buttonBrowseFolder.TabIndex = 9;
-            this.buttonBrowseFolder.Text = "Browse";
-            this.buttonBrowseFolder.UseVisualStyleBackColor = true;
-            this.buttonBrowseFolder.Click += new System.EventHandler(this.buttonBrowseFolder_Click);
+            this.ButtonBrowseFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.ButtonBrowseFolder.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.ButtonBrowseFolder.Location = new System.Drawing.Point(300, 33);
+            this.ButtonBrowseFolder.Name = "ButtonBrowseFolder";
+            this.ButtonBrowseFolder.Size = new System.Drawing.Size(81, 24);
+            this.ButtonBrowseFolder.TabIndex = 9;
+            this.ButtonBrowseFolder.Text = "Browse";
+            this.ButtonBrowseFolder.UseVisualStyleBackColor = true;
+            this.ButtonBrowseFolder.Click += new System.EventHandler(this.ButtonBrowseFolder_Click);
             // 
             // label6
             // 
@@ -692,13 +690,13 @@
             this.label6.Text = "Enabled:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // textBoxFolder
+            // TextBoxFolder
             // 
-            this.textBoxFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxFolder.Location = new System.Drawing.Point(76, 34);
-            this.textBoxFolder.Name = "textBoxFolder";
-            this.textBoxFolder.Size = new System.Drawing.Size(218, 23);
-            this.textBoxFolder.TabIndex = 8;
+            this.TextBoxFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TextBoxFolder.Location = new System.Drawing.Point(76, 34);
+            this.TextBoxFolder.Name = "TextBoxFolder";
+            this.TextBoxFolder.Size = new System.Drawing.Size(218, 23);
+            this.TextBoxFolder.TabIndex = 8;
             // 
             // label7
             // 
@@ -713,52 +711,72 @@
             this.label7.Text = "Folder:";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // checkBoxGhostSaverEnabled
+            // CheckBoxGhostSaverEnabled
             // 
-            this.checkBoxGhostSaverEnabled.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.CheckBoxGhostSaverEnabled.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkBoxGhostSaverEnabled.AutoSize = true;
-            this.checkBoxGhostSaverEnabled.Location = new System.Drawing.Point(76, 3);
-            this.checkBoxGhostSaverEnabled.Name = "checkBoxGhostSaverEnabled";
-            this.checkBoxGhostSaverEnabled.Size = new System.Drawing.Size(15, 24);
-            this.checkBoxGhostSaverEnabled.TabIndex = 7;
-            this.checkBoxGhostSaverEnabled.UseVisualStyleBackColor = true;
+            this.CheckBoxGhostSaverEnabled.AutoSize = true;
+            this.CheckBoxGhostSaverEnabled.Location = new System.Drawing.Point(76, 3);
+            this.CheckBoxGhostSaverEnabled.Name = "CheckBoxGhostSaverEnabled";
+            this.CheckBoxGhostSaverEnabled.Size = new System.Drawing.Size(15, 24);
+            this.CheckBoxGhostSaverEnabled.TabIndex = 7;
+            this.CheckBoxGhostSaverEnabled.UseVisualStyleBackColor = true;
             // 
             // GroupBoxGraphics
             // 
+            this.GroupBoxGraphics.Controls.Add(this.CheckBoxDontHideRivalGhost);
+            this.GroupBoxGraphics.Controls.Add(this.CheckBoxHidePBGhost);
             this.GroupBoxGraphics.Controls.Add(this.tableLayoutPanel6);
             this.GroupBoxGraphics.Controls.Add(this.label3);
             this.GroupBoxGraphics.Controls.Add(this.ButtonPBGhostColour);
-            this.GroupBoxGraphics.Controls.Add(this.ButtonOnlineGhostColour);
-            this.GroupBoxGraphics.Controls.Add(this.CheckBoxOnlineGhostColour);
+            this.GroupBoxGraphics.Controls.Add(this.ButtonRivalGhostColour);
+            this.GroupBoxGraphics.Controls.Add(this.CheckBoxRivalGhostColour);
             this.GroupBoxGraphics.Controls.Add(this.CheckBoxPBGhostColour);
-            this.GroupBoxGraphics.Controls.Add(this.CheckBoxHidePBGhost);
             this.GroupBoxGraphics.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GroupBoxGraphics.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.GroupBoxGraphics.Location = new System.Drawing.Point(3, 3);
             this.GroupBoxGraphics.Name = "GroupBoxGraphics";
-            this.GroupBoxGraphics.Size = new System.Drawing.Size(390, 129);
+            this.GroupBoxGraphics.Size = new System.Drawing.Size(390, 138);
             this.GroupBoxGraphics.TabIndex = 11;
             this.GroupBoxGraphics.TabStop = false;
             this.GroupBoxGraphics.Text = "Graphics";
+            // 
+            // CheckBoxDontHideRivalGhost
+            // 
+            this.CheckBoxDontHideRivalGhost.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBoxDontHideRivalGhost.Location = new System.Drawing.Point(11, 92);
+            this.CheckBoxDontHideRivalGhost.Name = "CheckBoxDontHideRivalGhost";
+            this.CheckBoxDontHideRivalGhost.Padding = new System.Windows.Forms.Padding(3);
+            this.CheckBoxDontHideRivalGhost.Size = new System.Drawing.Size(149, 41);
+            this.CheckBoxDontHideRivalGhost.TabIndex = 41;
+            this.CheckBoxDontHideRivalGhost.Text = "Don\'t hide rival ghost after beating it";
+            this.CheckBoxDontHideRivalGhost.UseVisualStyleBackColor = true;
+            // 
+            // CheckBoxHidePBGhost
+            // 
+            this.CheckBoxHidePBGhost.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBoxHidePBGhost.Location = new System.Drawing.Point(11, 69);
+            this.CheckBoxHidePBGhost.Name = "CheckBoxHidePBGhost";
+            this.CheckBoxHidePBGhost.Padding = new System.Windows.Forms.Padding(3);
+            this.CheckBoxHidePBGhost.Size = new System.Drawing.Size(150, 25);
+            this.CheckBoxHidePBGhost.TabIndex = 40;
+            this.CheckBoxHidePBGhost.Text = "Hide PB ghost";
+            this.CheckBoxHidePBGhost.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel6
             // 
             this.tableLayoutPanel6.ColumnCount = 1;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel6.Controls.Add(this.TrackBarNameTagOpacity, 0, 1);
-            this.tableLayoutPanel6.Controls.Add(this.label2, 0, 2);
-            this.tableLayoutPanel6.Controls.Add(this.TrackBarGhostOpacity, 0, 3);
             this.tableLayoutPanel6.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel6.Location = new System.Drawing.Point(5, 18);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 4;
+            this.tableLayoutPanel6.RowCount = 2;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 15F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(139, 106);
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(156, 51);
             this.tableLayoutPanel6.TabIndex = 39;
             // 
             // TrackBarNameTagOpacity
@@ -770,36 +788,9 @@
             this.TrackBarNameTagOpacity.Margin = new System.Windows.Forms.Padding(0);
             this.TrackBarNameTagOpacity.Maximum = 100;
             this.TrackBarNameTagOpacity.Name = "TrackBarNameTagOpacity";
-            this.TrackBarNameTagOpacity.Size = new System.Drawing.Size(139, 33);
+            this.TrackBarNameTagOpacity.Size = new System.Drawing.Size(156, 31);
             this.TrackBarNameTagOpacity.TabIndex = 0;
             this.TrackBarNameTagOpacity.TickFrequency = 10;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label2.Location = new System.Drawing.Point(3, 53);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(133, 15);
-            this.label2.TabIndex = 33;
-            this.label2.Text = "Ghost opacity";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // TrackBarGhostOpacity
-            // 
-            this.TrackBarGhostOpacity.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TrackBarGhostOpacity.BackColor = System.Drawing.SystemColors.Window;
-            this.TrackBarGhostOpacity.LargeChange = 10;
-            this.TrackBarGhostOpacity.Location = new System.Drawing.Point(0, 68);
-            this.TrackBarGhostOpacity.Margin = new System.Windows.Forms.Padding(0);
-            this.TrackBarGhostOpacity.Maximum = 100;
-            this.TrackBarGhostOpacity.Name = "TrackBarGhostOpacity";
-            this.TrackBarGhostOpacity.Size = new System.Drawing.Size(139, 38);
-            this.TrackBarGhostOpacity.TabIndex = 1;
-            this.TrackBarGhostOpacity.TickFrequency = 10;
             // 
             // label1
             // 
@@ -808,7 +799,7 @@
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(133, 20);
+            this.label1.Size = new System.Drawing.Size(150, 20);
             this.label1.TabIndex = 31;
             this.label1.Text = "Name tag opacity";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -816,60 +807,52 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(154, 103);
+            this.label3.Location = new System.Drawing.Point(173, 78);
             this.label3.Margin = new System.Windows.Forms.Padding(0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(211, 15);
+            this.label3.Size = new System.Drawing.Size(183, 30);
             this.label3.TabIndex = 38;
-            this.label3.Text = "Darker colours reduce ghost opacity.";
+            this.label3.Text = "Choose a darker colour to make\r\na ghost more transparent.";
             // 
             // ButtonPBGhostColour
             // 
             this.ButtonPBGhostColour.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.ButtonPBGhostColour.Location = new System.Drawing.Point(331, 43);
+            this.ButtonPBGhostColour.Location = new System.Drawing.Point(339, 19);
             this.ButtonPBGhostColour.Name = "ButtonPBGhostColour";
             this.ButtonPBGhostColour.Size = new System.Drawing.Size(35, 23);
             this.ButtonPBGhostColour.TabIndex = 4;
             this.ButtonPBGhostColour.UseVisualStyleBackColor = false;
+            this.ButtonPBGhostColour.Click += new System.EventHandler(this.ButtonPBGhostColour_Click);
             // 
-            // ButtonOnlineGhostColour
+            // ButtonRivalGhostColour
             // 
-            this.ButtonOnlineGhostColour.BackColor = System.Drawing.Color.Maroon;
-            this.ButtonOnlineGhostColour.Location = new System.Drawing.Point(331, 73);
-            this.ButtonOnlineGhostColour.Name = "ButtonOnlineGhostColour";
-            this.ButtonOnlineGhostColour.Size = new System.Drawing.Size(35, 23);
-            this.ButtonOnlineGhostColour.TabIndex = 6;
-            this.ButtonOnlineGhostColour.UseVisualStyleBackColor = false;
+            this.ButtonRivalGhostColour.BackColor = System.Drawing.Color.Maroon;
+            this.ButtonRivalGhostColour.Location = new System.Drawing.Point(339, 47);
+            this.ButtonRivalGhostColour.Name = "ButtonRivalGhostColour";
+            this.ButtonRivalGhostColour.Size = new System.Drawing.Size(35, 23);
+            this.ButtonRivalGhostColour.TabIndex = 6;
+            this.ButtonRivalGhostColour.UseVisualStyleBackColor = false;
+            this.ButtonRivalGhostColour.Click += new System.EventHandler(this.ButtonRivalGhostColour_Click);
             // 
-            // CheckBoxOnlineGhostColour
+            // CheckBoxRivalGhostColour
             // 
-            this.CheckBoxOnlineGhostColour.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBoxOnlineGhostColour.Location = new System.Drawing.Point(151, 75);
-            this.CheckBoxOnlineGhostColour.Name = "CheckBoxOnlineGhostColour";
-            this.CheckBoxOnlineGhostColour.Size = new System.Drawing.Size(192, 19);
-            this.CheckBoxOnlineGhostColour.TabIndex = 5;
-            this.CheckBoxOnlineGhostColour.Text = "Change rival ghost colour";
-            this.CheckBoxOnlineGhostColour.UseVisualStyleBackColor = true;
+            this.CheckBoxRivalGhostColour.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBoxRivalGhostColour.Location = new System.Drawing.Point(175, 50);
+            this.CheckBoxRivalGhostColour.Name = "CheckBoxRivalGhostColour";
+            this.CheckBoxRivalGhostColour.Size = new System.Drawing.Size(192, 19);
+            this.CheckBoxRivalGhostColour.TabIndex = 5;
+            this.CheckBoxRivalGhostColour.Text = "Change rival ghost colour";
+            this.CheckBoxRivalGhostColour.UseVisualStyleBackColor = true;
             // 
             // CheckBoxPBGhostColour
             // 
             this.CheckBoxPBGhostColour.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBoxPBGhostColour.Location = new System.Drawing.Point(151, 47);
+            this.CheckBoxPBGhostColour.Location = new System.Drawing.Point(175, 23);
             this.CheckBoxPBGhostColour.Name = "CheckBoxPBGhostColour";
             this.CheckBoxPBGhostColour.Size = new System.Drawing.Size(161, 19);
             this.CheckBoxPBGhostColour.TabIndex = 3;
             this.CheckBoxPBGhostColour.Text = "Change PB ghost colour";
             this.CheckBoxPBGhostColour.UseVisualStyleBackColor = true;
-            // 
-            // CheckBoxHidePBGhost
-            // 
-            this.CheckBoxHidePBGhost.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBoxHidePBGhost.Location = new System.Drawing.Point(151, 18);
-            this.CheckBoxHidePBGhost.Name = "CheckBoxHidePBGhost";
-            this.CheckBoxHidePBGhost.Size = new System.Drawing.Size(114, 19);
-            this.CheckBoxHidePBGhost.TabIndex = 2;
-            this.CheckBoxHidePBGhost.Text = "Hide PB ghost";
-            this.CheckBoxHidePBGhost.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -910,7 +893,6 @@
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarNameTagOpacity)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TrackBarGhostOpacity)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -938,30 +920,27 @@
         private System.Windows.Forms.GroupBox GroupBoxGraphics;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.TrackBar TrackBarNameTagOpacity;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TrackBar TrackBarGhostOpacity;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button ButtonPBGhostColour;
-        private System.Windows.Forms.Button ButtonOnlineGhostColour;
-        private System.Windows.Forms.CheckBox CheckBoxOnlineGhostColour;
+        private System.Windows.Forms.Button ButtonRivalGhostColour;
+        private System.Windows.Forms.CheckBox CheckBoxRivalGhostColour;
         private System.Windows.Forms.CheckBox CheckBoxPBGhostColour;
-        private System.Windows.Forms.CheckBox CheckBoxHidePBGhost;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.Button buttonBrowseFile;
+        private System.Windows.Forms.Button ButtonBrowseFile;
         internal System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBoxFile;
+        private System.Windows.Forms.TextBox TextBoxFile;
         internal System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBoxNameTag;
-        private System.Windows.Forms.RadioButton radioButtonFromFile;
+        private System.Windows.Forms.TextBox TextBoxNameTag;
+        private System.Windows.Forms.RadioButton RadioButtonFromFile;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
         private System.Windows.Forms.NumericUpDown NumericUpDownPosition;
         internal System.Windows.Forms.Label LabelPosition;
-        private System.Windows.Forms.RadioButton radioButtonLeaderboardRank;
+        private System.Windows.Forms.RadioButton RadioButtonLeaderboardRank;
         private System.Windows.Forms.GroupBox FastestPlayerSelector;
-        private System.Windows.Forms.RadioButton radioButtonFastestPlayer;
+        private System.Windows.Forms.RadioButton RadioButtonFastestPlayer;
         internal System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         internal System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         internal System.Windows.Forms.Button ButtonAdd;
@@ -970,15 +949,17 @@
         private System.Windows.Forms.ListView ListViewPlayers;
         private System.Windows.Forms.ColumnHeader NameColumn;
         private System.Windows.Forms.ColumnHeader SteamIdColumn;
-        private System.Windows.Forms.RadioButton radioButtonDefault;
+        private System.Windows.Forms.RadioButton RadioButtonDefault;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
-        private System.Windows.Forms.Button buttonBrowseFolder;
-        private System.Windows.Forms.TextBox textBoxFolder;
+        private System.Windows.Forms.Button ButtonBrowseFolder;
+        private System.Windows.Forms.TextBox TextBoxFolder;
         internal System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         internal System.Windows.Forms.Label label6;
-        private System.Windows.Forms.CheckBox checkBoxGhostSaverEnabled;
-        private System.Windows.Forms.RadioButton radioButtonDisable;
+        private System.Windows.Forms.CheckBox CheckBoxGhostSaverEnabled;
+        private System.Windows.Forms.RadioButton RadioButtonDisable;
+        private System.Windows.Forms.CheckBox CheckBoxDontHideRivalGhost;
+        private System.Windows.Forms.CheckBox CheckBoxHidePBGhost;
     }
 }
