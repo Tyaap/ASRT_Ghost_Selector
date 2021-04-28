@@ -3,7 +3,7 @@ S&amp;ASRT mod that allows you to select a ghost in time attack.
 
 # How to install:
 
-Open the zip file and extract the two files to somewhere on your computer. The files do not need to be placed in a specific directory. 
+Open the zip file and extract the "Ghost Selector" folder to somewhere on your computer. The folder can be placed anywhere you like.
 
 # How to use:
 1. Start the game, then open the EXE file.
