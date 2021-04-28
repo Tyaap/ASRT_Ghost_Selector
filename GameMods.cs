@@ -92,14 +92,16 @@ namespace GhostSelector
                     Write(addressChangeLeaderboardDownload2, changeLeaderboardDownload2);
                     // Load players into memory
                     int address = addressPlayerListStart - 8;
+                    byte count = 0;
                     foreach (PlayerElement Player in Program.Config.GhostSelectors.FastestPlayer)
                     {
                         if (Player.Enabled)
                         {
                             Write(address += 8, Player.SteamId);
+                            count++;
                         }
                     }
-                    Write(addressChangeLeaderboardDownload1 + offsetPlayerCount, (byte)Program.Config.GhostSelectors.FastestPlayer.Count);
+                    Write(addressChangeLeaderboardDownload1 + offsetPlayerCount, count);
                     break;
                 case GhostSelector.FromFile:
                     Write(0x872EA9, (byte)0xEB); // disable online ghost loading

@@ -8,10 +8,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Ghost Selector")]
 [assembly: AssemblyDescription("Select a ghost in Sonic & All-Stars Racing Transformed")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("By Alex Liddiard")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("Tyapp")]
+[assembly: AssemblyProduct("Ghost Selector")]
+[assembly: AssemblyCopyright("Alex Liddiard")]
+[assembly: AssemblyTrademark("Tyapp")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("7.1.0.0")]
+[assembly: AssemblyFileVersion("7.1.0.0")]
