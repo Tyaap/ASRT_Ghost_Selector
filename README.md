@@ -9,7 +9,7 @@ Open the zip file and extract the two files to somewhere on your computer. The f
 1. Start the game, then open the EXE file.
 
 2. Choose a rival ghost from the available options:
-   * No rival --> disables the rival ghost (but not your PB)
+   * No rival --> Disables the rival ghost (but not your PB).
    * Default rival --> One position above you on your leaderboard.
    * Specific rank --> Selects the ghost at fixed position on the leaderboard.
    * Fastest player --> Automatically pick the fastest ghost out of a list of players. You need to know their Steam ID (called steamID64). Go to a players Steam profile, copy the website address, paste it here: https://steamid.io and click lookup.
